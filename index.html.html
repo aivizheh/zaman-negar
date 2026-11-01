@@ -1,0 +1,3628 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>زمان‌نگار | اپلیکیشن برنامه‌ریزی روزانه و مدیریت زمان</title>
+
+  <!-- متاتگ‌های استاندارد وب‌اپلیکیشن (PWA) برای اندروید، دسکتاپ و iOS -->
+  <meta name="theme-color" content="#090d11" id="metaThemeColor" />
+  <meta name="description" content="زمان‌نگار - وب‌اپلیکیشن مدرن برنامه‌ریزی روزانه، ردیابی زمان، پومودورو و نمودار فعالیت سالانه شمسی | ساخته شده توسط امیرحسین آویژه (AiVizheh.ir)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="زمان‌نگار" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link id="appleTouchIconLink" rel="apple-touch-icon" href="" />
+  <link id="faviconLink" rel="icon" type="image/png" href="" />
+  <link id="manifestLink" rel="manifest" href="" />
+
+  <!-- بارگذاری فونت پیدا (Peyda) با پشتیبانی کامل از وزن‌های مختلف -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/peyda-font@v1.0.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            peyda: ['Peyda', 'PeydaWeb', 'Vazirmatn', 'Tahoma', 'sans-serif'],
+          },
+          colors: {
+            obsidian: {
+              950: '#090d11',
+              900: '#10161d',
+              800: '#18212b',
+              700: '#24303f'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root,
+    [data-theme="carbon-emerald"] {
+      --bg-main: #090d11;
+      --bg-card: rgba(16, 22, 29, 0.92);
+      --bg-elevated: rgba(24, 33, 43, 0.85);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: rgba(148, 163, 184, 0.14);
+      --accent-primary: #10b981;
+      --accent-secondary: #f59e0b;
+      --accent-tertiary: #06b6d4;
+      --heat-0: rgba(30, 41, 59, 0.55);
+      --heat-1: rgba(16, 185, 129, 0.28);
+      --heat-2: rgba(16, 185, 129, 0.52);
+      --heat-3: rgba(16, 185, 129, 0.78);
+      --heat-4: #10b981;
+    }
+
+    [data-theme="midnight-ocean"] {
+      --bg-main: #07111a;
+      --bg-card: rgba(12, 25, 38, 0.92);
+      --bg-elevated: rgba(19, 38, 56, 0.85);
+      --text-main: #f0f9ff;
+      --text-muted: #7dd3fc;
+      --border-color: rgba(56, 189, 248, 0.18);
+      --accent-primary: #0ea5e9;
+      --accent-secondary: #14b8a6;
+      --accent-tertiary: #f59e0b;
+      --heat-0: rgba(19, 38, 56, 0.65);
+      --heat-1: rgba(14, 165, 233, 0.28);
+      --heat-2: rgba(14, 165, 233, 0.52);
+      --heat-3: rgba(14, 165, 233, 0.78);
+      --heat-4: #38bdf8;
+    }
+
+    [data-theme="espresso-amber"] {
+      --bg-main: #120f0d;
+      --bg-card: rgba(28, 23, 20, 0.92);
+      --bg-elevated: rgba(41, 34, 29, 0.85);
+      --text-main: #fef3c7;
+      --text-muted: #d6d3d1;
+      --border-color: rgba(245, 158, 11, 0.18);
+      --accent-primary: #f59e0b;
+      --accent-secondary: #10b981;
+      --accent-tertiary: #fb7185;
+      --heat-0: rgba(41, 34, 29, 0.65);
+      --heat-1: rgba(245, 158, 11, 0.28);
+      --heat-2: rgba(245, 158, 11, 0.52);
+      --heat-3: rgba(245, 158, 11, 0.78);
+      --heat-4: #fbbf24;
+    }
+
+    [data-theme="titanium-lime"] {
+      --bg-main: #0c0e0c;
+      --bg-card: rgba(20, 24, 20, 0.94);
+      --bg-elevated: rgba(31, 37, 31, 0.85);
+      --text-main: #ecfccb;
+      --text-muted: #a1a1aa;
+      --border-color: rgba(132, 204, 22, 0.20);
+      --accent-primary: #84cc16;
+      --accent-secondary: #06b6d4;
+      --accent-tertiary: #eab308;
+      --heat-0: rgba(31, 37, 31, 0.65);
+      --heat-1: rgba(132, 204, 22, 0.28);
+      --heat-2: rgba(132, 204, 22, 0.52);
+      --heat-3: rgba(132, 204, 22, 0.78);
+      --heat-4: #a3e635;
+    }
+
+    [data-theme="minimal-light"] {
+      --bg-main: #f8fafc;
+      --bg-card: rgba(255, 255, 255, 0.96);
+      --bg-elevated: rgba(241, 245, 249, 0.92);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: rgba(15, 23, 42, 0.11);
+      --accent-primary: #059669;
+      --accent-secondary: #d97706;
+      --accent-tertiary: #0284c7;
+      --heat-0: #e2e8f0;
+      --heat-1: #a7f3d0;
+      --heat-2: #34d399;
+      --heat-3: #10b981;
+      --heat-4: #047857;
+    }
+
+    [data-theme="sand-teal"] {
+      --bg-main: #f5f2eb;
+      --bg-card: rgba(255, 253, 249, 0.95);
+      --bg-elevated: rgba(238, 233, 223, 0.9);
+      --text-main: #1c1917;
+      --text-muted: #57534e;
+      --border-color: rgba(28, 25, 23, 0.12);
+      --accent-primary: #0d9488;
+      --accent-secondary: #ea580c;
+      --accent-tertiary: #0284c7;
+      --heat-0: #e7e2d8;
+      --heat-1: #99f6e4;
+      --heat-2: #2dd4bf;
+      --heat-3: #0d9488;
+      --heat-4: #115e59;
+    }
+
+    * {
+      font-family: 'Peyda', 'PeydaWeb', 'Vazirmatn', Tahoma, sans-serif !important;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: hidden;
+      padding-top: env(safe-area-inset-top, 0px);
+    }
+
+    .theme-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(14px);
+    }
+
+    .theme-elevated {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-color);
+    }
+
+    .theme-muted {
+      color: var(--text-muted);
+    }
+
+    /* اسکرول‌بار ظریف */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.15);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(16, 185, 129, 0.4);
+      border-radius: 9999px;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Drag & Drop */
+    .draggable-item {
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .draggable-item:active {
+      cursor: grabbing;
+    }
+    .dragging {
+      opacity: 0.45;
+      transform: scale(0.98);
+      border: 1px dashed var(--accent-primary) !important;
+    }
+    .drop-zone-active {
+      border-color: var(--accent-primary) !important;
+      background-color: rgba(16, 185, 129, 0.08) !important;
+    }
+    .reorder-over-top {
+      border-top: 2px solid var(--accent-primary) !important;
+    }
+    .reorder-over-bottom {
+      border-bottom: 2px solid var(--accent-primary) !important;
+    }
+
+    /* استایل نمودار فعالیت گیت‌هاب */
+    .heatmap-grid {
+      display: grid;
+      grid-template-rows: repeat(7, 13px);
+      grid-auto-flow: column;
+      grid-auto-columns: 13px;
+      gap: 3px;
+    }
+    .heatmap-cell {
+      width: 13px;
+      height: 13px;
+      border-radius: 3px;
+      transition: transform 0.12s ease;
+    }
+    .heatmap-cell:hover {
+      transform: scale(1.3);
+      z-index: 20;
+      outline: 2px solid var(--accent-secondary);
+    }
+    .heat-lvl-0 { background-color: var(--heat-0); }
+    .heat-lvl-1 { background-color: var(--heat-1); }
+    .heat-lvl-2 { background-color: var(--heat-2); }
+    .heat-lvl-3 { background-color: var(--heat-3); }
+    .heat-lvl-4 { background-color: var(--heat-4); }
+
+    @keyframes pulseRing {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45); }
+      50% { box-shadow: 0 0 0 7px rgba(245, 158, 11, 0); }
+    }
+    .timer-running-card {
+      border-color: #f59e0b !important;
+      animation: pulseRing 2s infinite;
+    }
+
+    .mobile-bottom-nav {
+      padding-bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    @media (max-width: 768px) {
+      .pb-mobile-safe {
+        padding-bottom: calc(5.8rem + env(safe-area-inset-bottom, 0px));
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen pb-mobile-safe md:pb-10 selection:bg-emerald-500 selection:text-slate-950" data-theme="carbon-emerald">
+
+  <!-- پس‌زمینه نوری ظریف (بدون بنفش) -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+    <div class="absolute -top-28 right-10 w-80 h-80 rounded-full opacity-15 blur-3xl" style="background: var(--accent-primary);"></div>
+    <div class="absolute bottom-10 left-10 w-80 h-80 rounded-full opacity-10 blur-3xl" style="background: var(--accent-tertiary);"></div>
+  </div>
+
+  <!-- کانتینر نوتیفیکیشن (Toast) -->
+  <div id="toastContainer" class="fixed bottom-20 md:bottom-6 left-4 right-4 md:right-auto md:w-96 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ========================================================================= -->
+  <!-- هدر اصلی برنامه (ساعت زنده شمسی، تقویم، دکمه نصب اپ و امضای سازنده)          -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-30 theme-card border-b shadow-md">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-6 py-2.5">
+      <div class="flex flex-wrap items-center justify-between gap-2.5">
+
+        <!-- برندینگ + نشان سازنده -->
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md shadow-emerald-950/50 shrink-0">
+            <svg class="w-6 h-6 text-obsidian-950" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 id="appWorkspaceTitle" class="text-base sm:text-lg font-extrabold tracking-tight">زمان‌نگار</h1>
+              <span id="streakHeaderBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">🔥 ۰ روز</span>
+              <span id="networkStatusBadge" class="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> آماده کار آفلاین
+              </span>
+            </div>
+            <div class="flex items-center gap-2 mt-0.5 flex-wrap">
+              <span id="appWorkspaceSubtitle" class="text-[11px] theme-muted hidden sm:inline">سیستم هوشمند برنامه‌ریزی و مدیریت زمان</span>
+              <a href="https://aivizheh.ir" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 hover:bg-emerald-500/20 transition">
+                <span>ساخته شده توسط امیرحسین آویژه</span>
+                <span class="opacity-60">|</span>
+                <span dir="ltr" class="font-extrabold underline">AiVizheh.ir</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- باکس ساعت زنده دیجیتال و تاریخ روز شمسی -->
+        <div class="flex items-center gap-2 sm:gap-3 theme-elevated px-3 py-1.5 rounded-2xl border border-emerald-500/30">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <div>
+              <div class="text-[10px] theme-muted font-bold">امروز (تقویم شمسی)</div>
+              <div id="liveJalaliDateText" class="text-xs sm:text-sm font-extrabold text-emerald-400">---</div>
+            </div>
+          </div>
+          <div class="h-7 w-px bg-slate-700/60"></div>
+          <div class="text-left" dir="ltr">
+            <div id="liveDigitalClock" class="text-sm sm:text-base font-black tracking-wider text-amber-400 font-mono">00:00:00</div>
+          </div>
+          <button onclick="jumpToTodayJalali()" class="px-2 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-[11px] font-extrabold transition shadow-sm">
+            امروز
+          </button>
+        </div>
+
+        <!-- دکمه‌های عملیاتی سریع هدر -->
+        <div class="flex items-center gap-1.5">
+          <button id="pwaInstallHeaderBtn" onclick="handleInstallAppClick()" class="px-2.5 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 border border-amber-500/30 text-xs font-extrabold transition flex items-center gap-1">
+            <span>📲</span>
+            <span>نصب اپ</span>
+          </button>
+          <button onclick="openOnboardingModal()" class="px-2.5 py-1.5 rounded-xl theme-elevated hover:border-emerald-500/40 text-xs font-bold transition flex items-center gap-1" title="انتخاب قالب آماده یا شخصی‌سازی">
+            <span>✨</span>
+            <span class="hidden sm:inline">قالب‌ها</span>
+          </button>
+          <button onclick="openManualLogModal()" class="px-2.5 py-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-400 border border-cyan-500/30 text-xs font-bold transition flex items-center gap-1" title="ثبت کارکرد در تاریخ دلخواه">
+            <span>+ ثبت تاریخ</span>
+          </button>
+          <button onclick="exportBackupJson()" class="p-2 rounded-xl theme-elevated hover:border-emerald-500/40 text-emerald-400 transition" title="دانلود فایل پشتیبان (JSON)">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- نوار تب‌های دسکتاپ + انتخابگر مستقیم تاریخ شمسی -->
+      <div class="mt-2.5 pt-2 border-t border-slate-800/60 flex flex-wrap items-center justify-between gap-2">
+        <!-- تب‌های ۵گانه دسکتاپ -->
+        <nav class="hidden md:flex items-center gap-1 theme-elevated p-1 rounded-xl">
+          <button onclick="switchMainTab('workspace')" id="deskTab-workspace" class="px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center gap-1.5 bg-emerald-500 text-obsidian-950">
+            <span>🗓️</span> میز کار روزانه
+          </button>
+          <button onclick="switchMainTab('bank')" id="deskTab-bank" class="px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center gap-1.5 opacity-80 hover:opacity-100">
+            <span>🗂️</span> بانک تسک و اهداف
+          </button>
+          <button onclick="switchMainTab('analytics')" id="deskTab-analytics" class="px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center gap-1.5 opacity-80 hover:opacity-100">
+            <span>📊</span> آمار و فعالیت سالانه
+          </button>
+          <button onclick="switchMainTab('focus')" id="deskTab-focus" class="px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center gap-1.5 opacity-80 hover:opacity-100">
+            <span>⏱️</span> تمرکز و ایده‌ها
+          </button>
+          <button onclick="switchMainTab('settings')" id="deskTab-settings" class="px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center gap-1.5 opacity-80 hover:opacity-100">
+            <span>⚙️</span> تنظیمات و پشتیبان
+          </button>
+        </nav>
+
+        <!-- ناوبری تاریخ شمسی (هفته قبل/بعد + پرش به هر تاریخ در چند سال) -->
+        <div class="flex flex-wrap items-center justify-between w-full md:w-auto gap-1.5">
+          <div class="flex items-center gap-1">
+            <button onclick="shiftSelectedDate(-7)" class="px-2 py-1 rounded-lg theme-elevated hover:border-emerald-500/40 text-[11px] font-bold transition">« هفته قبل</button>
+            <button onclick="shiftSelectedDate(-1)" class="px-2 py-1 rounded-lg theme-elevated hover:border-emerald-500/40 text-[11px] font-bold transition">‹ روز قبل</button>
+            <span id="activeSelectedDateBadge" class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-xs font-extrabold">---</span>
+            <button onclick="shiftSelectedDate(1)" class="px-2 py-1 rounded-lg theme-elevated hover:border-emerald-500/40 text-[11px] font-bold transition">روز بعد ›</button>
+            <button onclick="shiftSelectedDate(7)" class="px-2 py-1 rounded-lg theme-elevated hover:border-emerald-500/40 text-[11px] font-bold transition">هفته بعد »</button>
+          </div>
+
+          <div class="flex items-center gap-1 theme-elevated px-2 py-0.5 rounded-lg">
+            <span class="text-[10px] theme-muted">پرش به:</span>
+            <select id="jumpDaySelect" onchange="handleDirectJalaliJump()" class="bg-transparent text-xs font-bold focus:outline-none cursor-pointer"></select>
+            <select id="jumpMonthSelect" onchange="handleDirectJalaliJump()" class="bg-transparent text-xs font-bold focus:outline-none cursor-pointer">
+              <option value="1" class="bg-slate-900 text-white">فروردین</option>
+              <option value="2" class="bg-slate-900 text-white">اردیبهشت</option>
+              <option value="3" class="bg-slate-900 text-white">خرداد</option>
+              <option value="4" class="bg-slate-900 text-white">تیر</option>
+              <option value="5" class="bg-slate-900 text-white">مرداد</option>
+              <option value="6" class="bg-slate-900 text-white">شهریور</option>
+              <option value="7" class="bg-slate-900 text-white">مهر</option>
+              <option value="8" class="bg-slate-900 text-white">آبان</option>
+              <option value="9" class="bg-slate-900 text-white">آذر</option>
+              <option value="10" class="bg-slate-900 text-white">دی</option>
+              <option value="11" class="bg-slate-900 text-white">بهمن</option>
+              <option value="12" class="bg-slate-900 text-white">اسفند</option>
+            </select>
+            <select id="jumpYearSelect" onchange="handleDirectJalaliJump()" class="bg-transparent text-xs font-bold focus:outline-none cursor-pointer"></select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- نوار اعلان تایمر زنده تسک (در صورت روشن بودن تایمر روی یک تسک) -->
+  <div id="liveTimerGlobalBar" class="hidden max-w-[1440px] mx-auto px-3 sm:px-6 mt-3">
+    <div class="p-3 rounded-2xl bg-amber-500/15 border border-amber-500/40 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <span class="w-3 h-3 rounded-full bg-amber-400 animate-ping"></span>
+        <div>
+          <span class="text-xs font-bold text-amber-300">تایمر زنده در حال ثبت زمان:</span>
+          <strong id="liveTimerTaskTitle" class="text-xs sm:text-sm font-extrabold mr-1">---</strong>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="liveTimerElapsedDisplay" class="font-mono text-base font-black text-amber-400">00:00</span>
+        <button onclick="stopLiveTaskTimer()" class="px-3 py-1 rounded-xl bg-amber-500 hover:bg-amber-400 text-obsidian-950 text-xs font-extrabold transition">
+          توقف و ذخیره زمان
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- بدنه اصلی برنامه (۵ تب مجزا، تمیز و خلوت)                                 -->
+  <!-- ========================================================================= -->
+  <main class="max-w-[1440px] mx-auto px-3 sm:px-6 mt-4">
+
+    <!-- ===================================================================== -->
+    <!-- تب ۱: میز کار روزانه (چک‌لیست روز + نوار ۷ روز هفته + کشوی بانک)       -->
+    <!-- ===================================================================== -->
+    <section id="tabPanel-workspace" class="space-y-4">
+
+      <!-- نوار تب‌های ۷ روز هفته جاری شمسی (شنبه تا جمعه) -->
+      <div class="theme-card rounded-2xl p-3 sm:p-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xs sm:text-sm font-extrabold" id="weekRangeTitleHeader">هفته جاری</span>
+            <span class="text-[11px] theme-muted hidden sm:inline">(می‌توانید تسک‌ها را از بانک بکشید و روی هر روز رها کنید)</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="applyDailyRoutinesToWeek()" class="px-2.5 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-xs font-extrabold transition">
+              ⚡ چیدمان خودکار روتین‌ها در هفته
+            </button>
+            <div class="theme-elevated p-0.5 rounded-xl flex items-center">
+              <button id="viewBtn-day" onclick="setPlannerView('day')" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-emerald-500 text-obsidian-950 transition">نمای روزانه</button>
+              <button id="viewBtn-board" onclick="setPlannerView('board')" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold opacity-75 transition">برد کل هفته</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- کارت‌های ۷ روز هفته -->
+        <div id="dayTabsContainer" class="grid grid-cols-7 gap-1.5 sm:gap-2"></div>
+      </div>
+
+      <!-- سوییچ مخصوص موبایل بین «چک‌لیست روز» و «کشوی بانک تسک‌ها» -->
+      <div class="flex lg:hidden theme-card p-1 rounded-xl">
+        <button id="mobSubTab-schedule" onclick="setMobileWorkspacePane('schedule')" class="flex-1 py-2 rounded-lg text-xs font-extrabold bg-emerald-500 text-obsidian-950 transition">
+          📋 چک‌لیست روز انتخاب‌شده
+        </button>
+        <button id="mobSubTab-drawer" onclick="setMobileWorkspacePane('drawer')" class="flex-1 py-2 rounded-lg text-xs font-extrabold opacity-75 transition">
+          📥 افزودن از بانک تسک‌ها
+        </button>
+      </div>
+
+      <!-- نمای روزانه: دو ستون در دسکتاپ (چک‌لیست روز + کشوی بانک سریع) -->
+      <div id="dayFocusView" class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+
+        <!-- ستون راست/اصلی: چک‌لیست روز، افزودن تسک دستی و مرتب‌سازی -->
+        <div id="workspaceSchedulePane" class="lg:col-span-8 space-y-4">
+          <div class="theme-card rounded-2xl p-4 sm:p-5">
+
+            <!-- هدر روز انتخاب‌شده + نوار پیشرفت -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800/60">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h2 id="selectedDayMainTitle" class="text-base sm:text-xl font-extrabold text-emerald-400">شنبه</h2>
+                  <span id="selectedDayCountBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full theme-elevated">۰ از ۰ انجام شده</span>
+                </div>
+                <p id="selectedDayTimeSummary" class="text-xs theme-muted mt-1">مجموع زمان: ۰ دقیقه صرف‌شده از ۰ دقیقه هدف</p>
+              </div>
+
+              <div class="flex items-center gap-1.5">
+                <button onclick="sortDayTasks('time')" class="px-2.5 py-1.5 rounded-xl theme-elevated hover:border-emerald-500/40 text-[11px] font-bold transition" title="مرتب‌سازی بر اساس ساعت شروع و اولویت">
+                  ⇅ مرتب‌سازی ساعت/اولویت
+                </button>
+                <button onclick="clearDateTasks(state.activeDateKey)" class="px-2.5 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 text-[11px] font-bold transition">
+                  پاکسازی روز
+                </button>
+              </div>
+            </div>
+
+            <!-- نوار پیشرفت روز -->
+            <div class="mt-3">
+              <div class="flex justify-between text-xs font-bold mb-1">
+                <span class="theme-muted">درصد تکمیل برنامه روز</span>
+                <span id="dayCompletionPercentText" class="text-emerald-400">۰٪</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-slate-800/80 overflow-hidden">
+                <div id="dayCompletionBar" class="h-full bg-gradient-to-l from-emerald-400 to-teal-500 transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- فرم افزودن تسک روزانه دستی (خارج از بانک برنامه) -->
+            <form onsubmit="handleAddCustomDailyTask(event)" class="mt-4 p-3 rounded-2xl theme-elevated border border-dashed border-emerald-500/30">
+              <div class="text-xs font-extrabold text-emerald-400 mb-2 flex items-center justify-between">
+                <span>+ افزودن سریع تسک به این روز (شخصی یا خارج از بانک)</span>
+                <span class="text-[10px] theme-muted">ساعت ۲۴ ساعته دقیق</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
+                <input id="customTaskTitleInput" type="text" required placeholder="عنوان کار (مثلاً: جلسه آنلاین، خرید، تماس...)" class="sm:col-span-5 px-3 py-2 rounded-xl bg-slate-900/60 border border-slate-700/70 text-xs focus:outline-none focus:border-emerald-500" />
+                <select id="customTaskCategorySelect" class="sm:col-span-3 px-2.5 py-2 rounded-xl bg-slate-900/60 border border-slate-700/70 text-xs focus:outline-none focus:border-emerald-500"></select>
+                <div class="sm:col-span-2 flex items-center gap-1 bg-slate-900/60 border border-slate-700/70 rounded-xl px-2 py-1.5">
+                  <input id="customTaskTargetInput" type="number" min="5" max="720" value="30" class="w-full bg-transparent text-xs font-extrabold text-center focus:outline-none" title="زمان هدف (دقیقه)" />
+                  <span class="text-[10px] theme-muted">دقیقه</span>
+                </div>
+                <button type="button" onclick="openTimePickerForForm('customTaskTimeValue', 'customTaskTimeBtnLabel')" class="sm:col-span-2 px-2.5 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 border border-amber-500/30 text-xs font-extrabold transition flex items-center justify-center gap-1">
+                  <span>🕒</span>
+                  <span id="customTaskTimeBtnLabel">ساعت شروع</span>
+                </button>
+                <input type="hidden" id="customTaskTimeValue" value="" />
+              </div>
+              <div class="mt-2 flex items-center justify-between gap-2">
+                <label class="inline-flex items-center gap-1.5 text-[11px] theme-muted cursor-pointer">
+                  <input type="checkbox" id="customTaskSaveToBankCheck" class="rounded accent-emerald-500" />
+                  <span>ذخیره همزمان در بانک تسک‌ها برای استفاده در روزهای آینده</span>
+                </label>
+                <button type="submit" class="px-4 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition shadow">
+                  + افزودن به لیست امروز
+                </button>
+              </div>
+            </form>
+
+            <!-- ناحیه Drag & Drop و لیست تسک‌های روز -->
+            <div id="dailyDropZone"
+                 ondragover="handleDayZoneDragOver(event)"
+                 ondragleave="handleDayZoneDragLeave(event)"
+                 ondrop="handleDayZoneDrop(event)"
+                 class="mt-4 min-h-[260px] rounded-2xl transition-all">
+              <div id="dailyTasksListContainer" class="space-y-2.5"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ستون چپ: کشوی بانک تسک‌ها برای درگ کردن یا افزودن با یک کلیک -->
+        <div id="workspaceDrawerPane" class="lg:col-span-4 hidden lg:block">
+          <div class="theme-card rounded-2xl p-4 sticky top-28">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div>
+                <h3 class="text-sm font-extrabold">🗂️ بانک تسک‌های آماده</h3>
+                <p class="text-[11px] theme-muted">بکشید و در روز رها کنید یا دکمه + را بزنید</p>
+              </div>
+              <button onclick="openNewBankTaskModal()" class="px-2.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition">
+                + تسک جدید
+              </button>
+            </div>
+
+            <!-- جستجو و فیلتر سریع کشوی بانک -->
+            <div class="space-y-2 mb-3">
+              <input id="drawerSearchInput" oninput="renderWorkspaceBankDrawer()" type="text" placeholder="جستجو در بانک تسک‌ها..." class="w-full px-3 py-1.5 rounded-xl theme-elevated text-xs focus:outline-none focus:border-emerald-500" />
+              <div id="drawerCategoryPills" class="flex items-center gap-1 overflow-x-auto no-scrollbar pb-1"></div>
+            </div>
+
+            <!-- لیست فشرده بانک تسک‌ها -->
+            <div id="drawerBankListContainer" class="space-y-2 max-h-[480px] overflow-y-auto pl-1"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- نمای برد کل هفته (۷ ستون شنبه تا جمعه) -->
+      <div id="weeklyBoardView" class="hidden">
+        <div id="weeklyBoardColumns" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3"></div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- تب ۲: بانک تسک‌ها، دسته‌بندی‌های سفارشی و شمارنده‌های هدف               -->
+    <!-- ===================================================================== -->
+    <section id="tabPanel-bank" class="hidden space-y-5">
+
+      <!-- بخش شمارنده‌های پیشرفت و اهداف (Goal & Habit Counters) -->
+      <div class="theme-card rounded-2xl p-4 sm:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <h2 class="text-base sm:text-lg font-extrabold flex items-center gap-2">
+              <span>🎯</span> شمارنده‌های هدف و عادت‌های مستمر
+            </h2>
+            <p class="text-xs theme-muted">مناسب برای پیگیری صفحات کتاب، جلسات دوره، تمرین زبان یا هر هدف مرحله‌ای</p>
+          </div>
+          <button onclick="openAddCounterModal()" class="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition">
+            + تعریف هدف شمارشی جدید
+          </button>
+        </div>
+        <div id="goalCountersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+
+      <!-- مدیریت دسته‌بندی‌ها + بانک کامل تسک‌ها -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+        <!-- مدیریت دسته‌بندی‌ها -->
+        <div class="lg:col-span-4 theme-card rounded-2xl p-4">
+          <h3 class="text-sm font-extrabold mb-1">🏷️ دسته‌بندی‌های شما</h3>
+          <p class="text-[11px] theme-muted mb-3">دسته‌بندی‌های دلخواه خود را با رنگ اختصاصی بسازید</p>
+
+          <form onsubmit="handleAddCategory(event)" class="space-y-2 mb-4 p-3 rounded-xl theme-elevated">
+            <div class="grid grid-cols-12 gap-2">
+              <input id="newCatIconInput" type="text" maxlength="2" placeholder="📌" value="📌" class="col-span-3 px-2 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700 text-center text-xs" />
+              <input id="newCatNameInput" type="text" required placeholder="نام دسته‌بندی جدید..." class="col-span-9 px-2.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700 text-xs focus:outline-none focus:border-emerald-500" />
+            </div>
+            <div class="flex items-center justify-between gap-2">
+              <select id="newCatColorSelect" class="flex-1 px-2 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700 text-xs">
+                <option value="#10b981">سبز زمردی</option>
+                <option value="#f59e0b">کهربایی / طلایی</option>
+                <option value="#06b6d4">فیروزه‌ای / سایان</option>
+                <option value="#3b82f6">آبی اقیانوسی</option>
+                <option value="#f43f5e">سرخ مرجانی</option>
+                <option value="#84cc16">سبز لایم</option>
+                <option value="#14b8a6">سبز تیل</option>
+              </select>
+              <button type="submit" class="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition">
+                + افزودن دسته
+              </button>
+            </div>
+          </form>
+
+          <div id="categoriesManagerList" class="space-y-2 max-h-80 overflow-y-auto"></div>
+        </div>
+
+        <!-- لیست کامل بانک تسک‌ها -->
+        <div class="lg:col-span-8 theme-card rounded-2xl p-4 sm:p-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-base font-extrabold">📚 بانک کامل تسک‌ها و روتین‌ها</h3>
+              <p class="text-xs theme-muted">تسک‌های تکرارشونده، پروژه‌ها و کارهای шаблоنی خود را اینجا مدیریت کنید</p>
+            </div>
+            <button onclick="openNewBankTaskModal()" class="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition shadow">
+              + تسک جدید در بانک
+            </button>
+          </div>
+
+          <div id="fullBankTasksGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- تب ۳: آمار زمان و نمودار فعالیت ۳۶۵ روزه گیت‌هاب                        -->
+    <!-- ===================================================================== -->
+    <section id="tabPanel-analytics" class="hidden space-y-5">
+
+      <!-- نمودار فعالیت ۳۶۵ روزه به سبک گیت‌هاب (GitHub Heatmap) -->
+      <div class="theme-card rounded-2xl p-4 sm:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 class="text-base sm:text-lg font-extrabold flex items-center gap-2">
+              <span>🟩</span> نمودار فعالیت سالانه (تقویم ۳۶۵ روزه شمسی)
+            </h2>
+            <p class="text-xs theme-muted">روی هر خانه کلیک کنید تا مستقیم به برنامه همان روز در سال بروید</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="heatmapYearSelect" onchange="renderGitHubHeatmap()" class="px-3 py-1.5 rounded-xl theme-elevated text-xs font-extrabold focus:outline-none"></select>
+            <select id="heatmapMetricSelect" onchange="renderGitHubHeatmap()" class="px-3 py-1.5 rounded-xl theme-elevated text-xs font-bold focus:outline-none">
+              <option value="minutes">بر اساس دقیقه زمان صرف‌شده</option>
+              <option value="tasks">بر اساس تعداد تسک انجام‌شده</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- کارت‌های خلاصه عملکرد سال -->
+        <div id="heatmapSummaryCards" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-4"></div>
+
+        <!-- گرید اسکرول‌پذیر ۳۶۵ روزه -->
+        <div class="overflow-x-auto pb-2">
+          <div class="min-w-[740px]">
+            <div class="flex justify-between text-[10px] theme-muted font-bold mb-1.5 px-2">
+              <span>فروردین</span><span>اردیبهشت</span><span>خرداد</span><span>تیر</span>
+              <span>مرداد</span><span>شهریور</span><span>مهر</span><span>آبان</span>
+              <span>آذر</span><span>دی</span><span>بهمن</span><span>اسفند</span>
+            </div>
+            <div id="githubHeatmapGrid" class="heatmap-grid p-2 rounded-xl theme-elevated"></div>
+          </div>
+        </div>
+
+        <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] theme-muted">
+          <span id="heatmapHoverInfo">ماوس یا انگشت خود را روی خانه‌های تقویم ببرید...</span>
+          <div class="flex items-center gap-1">
+            <span>کمتر</span>
+            <span class="w-3 h-3 rounded-sm heat-lvl-0 inline-block"></span>
+            <span class="w-3 h-3 rounded-sm heat-lvl-1 inline-block"></span>
+            <span class="w-3 h-3 rounded-sm heat-lvl-2 inline-block"></span>
+            <span class="w-3 h-3 rounded-sm heat-lvl-3 inline-block"></span>
+            <span class="w-3 h-3 rounded-sm heat-lvl-4 inline-block"></span>
+            <span>بیشتر</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- فیلتر بازه زمانی نمودارها (شامل بازه تاریخ دستی شمسی) -->
+      <div class="theme-card rounded-2xl p-4 sm:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-800/60">
+          <div>
+            <h3 class="text-base font-extrabold">📊 تحلیل زمان صرف‌شده روی هر بخش و تسک</h3>
+            <p id="analyticsActiveRangeLabel" class="text-xs text-emerald-400 font-bold mt-0.5">بازه فعلی: هفته جاری</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-1.5">
+            <button onclick="setAnalyticsRange('day')" id="rangeBtn-day" class="px-2.5 py-1.5 rounded-xl theme-elevated text-xs font-bold transition">روز انتخابی</button>
+            <button onclick="setAnalyticsRange('week')" id="rangeBtn-week" class="px-2.5 py-1.5 rounded-xl bg-emerald-500 text-obsidian-950 text-xs font-extrabold transition">هفته انتخابی</button>
+            <button onclick="setAnalyticsRange('month')" id="rangeBtn-month" class="px-2.5 py-1.5 rounded-xl theme-elevated text-xs font-bold transition">این ماه شمسی</button>
+            <button onclick="setAnalyticsRange('year')" id="rangeBtn-year" class="px-2.5 py-1.5 rounded-xl theme-elevated text-xs font-bold transition">کل سال شمسی</button>
+            <button onclick="setAnalyticsRange('all')" id="rangeBtn-all" class="px-2.5 py-1.5 rounded-xl theme-elevated text-xs font-bold transition">کل دوران</button>
+          </div>
+        </div>
+
+        <!-- فیلتر دستی تاریخ شمسی (از تاریخ ... تا تاریخ ...) -->
+        <div class="mt-3 p-3 rounded-xl theme-elevated flex flex-wrap items-center justify-between gap-2">
+          <div class="text-xs font-bold flex items-center gap-1.5">
+            <span>📅</span>
+            <span>فیلتر دستی بازه تاریخ شمسی:</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center gap-1">
+              <span class="text-[11px] theme-muted">از:</span>
+              <input id="customRangeStartInput" type="text" dir="ltr" placeholder="1405/01/01" class="w-28 px-2.5 py-1 rounded-lg bg-slate-900/70 border border-slate-700 text-xs font-mono text-center" />
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-[11px] theme-muted">تا:</span>
+              <input id="customRangeEndInput" type="text" dir="ltr" placeholder="1405/12/29" class="w-28 px-2.5 py-1 rounded-lg bg-slate-900/70 border border-slate-700 text-xs font-mono text-center" />
+            </div>
+            <button onclick="applyManualDateRangeFilter()" class="px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition">
+              اعمال بازه دستی
+            </button>
+          </div>
+        </div>
+
+        <!-- ۳ ستون نمودار: دونات سهم دسته‌بندی‌ها + نمودار روند ۷ روزه + رتبه‌بندی تسک‌ها -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+
+          <!-- ستون ۱: نمودار دونات دسته‌بندی‌ها -->
+          <div class="theme-elevated rounded-2xl p-4 flex flex-col items-center">
+            <h4 class="text-xs font-extrabold mb-3 self-start">🍩 سهم هر دسته‌بندی از زمان شما</h4>
+            <div class="relative w-44 h-44 flex items-center justify-center">
+              <svg id="categoryDonutSvg" viewBox="0 0 42 42" class="w-44 h-44 -rotate-90"></svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                <span class="text-[10px] theme-muted">مجموع زمان</span>
+                <span id="donutTotalTimeCenter" class="text-sm font-black text-emerald-400 mt-0.5">۰ دقیقه</span>
+              </div>
+            </div>
+            <div id="categoryDonutLegend" class="w-full mt-4 space-y-1.5"></div>
+          </div>
+
+          <!-- ستون ۲: نمودار میله‌ای عملکرد ۷ روز هفته انتخابی -->
+          <div class="theme-elevated rounded-2xl p-4 flex flex-col justify-between">
+            <div>
+              <h4 class="text-xs font-extrabold mb-1">📈 مقایسه زمان صرف‌شده و هدف در ۷ روز هفته</h4>
+              <p class="text-[11px] theme-muted mb-4">ستون سبز: زمان واقعی صرف‌شده | کادر کمرنگ: هدف</p>
+            </div>
+            <div id="weeklyBarChartContainer" class="grid grid-cols-7 gap-2 items-end h-48 pt-6 px-1"></div>
+          </div>
+
+          <!-- ستون ۳: بیشترین زمان صرف‌شده روی کدام تسک‌ها بوده است؟ -->
+          <div class="theme-elevated rounded-2xl p-4">
+            <h4 class="text-xs font-extrabold mb-3">🏆 بیشترین زمان صرف‌شده به تفکیک تسک</h4>
+            <div id="topTasksTimeList" class="space-y-2.5 max-h-60 overflow-y-auto pl-1"></div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- تب ۴: تایمر تمرکز پومودورو و جعبه ایده‌های سریع                        -->
+    <!-- ===================================================================== -->
+    <section id="tabPanel-focus" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+        <!-- تایمر تمرکز پومودورو -->
+        <div class="lg:col-span-5 theme-card rounded-2xl p-5 flex flex-col items-center text-center">
+          <div class="w-full flex items-center justify-between mb-3">
+            <h2 class="text-base font-extrabold">⏱️ تایمر تمرکز (پومودورو)</h2>
+            <span id="pomoStatusBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400">آماده شروع</span>
+          </div>
+
+          <div class="w-full mb-4 text-right">
+            <label class="text-[11px] theme-muted block mb-1">اتصال جلسه تمرکز به تسک امروز (اختیاری - زمان خودکار ثبت می‌شود):</label>
+            <select id="pomoLinkedTaskSelect" class="w-full px-3 py-2 rounded-xl theme-elevated text-xs font-bold focus:outline-none"></select>
+          </div>
+
+          <div class="w-48 h-48 rounded-full theme-elevated border-4 border-emerald-500/40 flex flex-col items-center justify-center my-2 shadow-inner">
+            <span id="pomoTimeDisplay" class="text-4xl font-black font-mono tracking-wider text-emerald-400">۲۵:۰۰</span>
+            <span id="pomoModeLabel" class="text-xs theme-muted mt-1">جلسه تمرکز عمیق</span>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center gap-1.5 my-3">
+            <button onclick="setPomodoroPreset(25, 'جلسه تمرکز ۲۵ دقیقه‌ای')" class="px-3 py-1 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500/40">۲۵ دقیقه</button>
+            <button onclick="setPomodoroPreset(45, 'جلسه تمرکز عمیق ۴۵ دقیقه‌ای')" class="px-3 py-1 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500/40">۴۵ دقیقه</button>
+            <button onclick="setPomodoroPreset(60, 'بلوک ۱ ساعته')" class="px-3 py-1 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500/40">۶۰ دقیقه</button>
+            <button onclick="setPomodoroPreset(5, 'استراحت کوتاه ۵ دقیقه‌ای')" class="px-3 py-1 rounded-lg theme-elevated text-xs font-bold text-amber-400">۵ دقیقه استراحت</button>
+          </div>
+
+          <div class="flex items-center gap-2 w-full mt-2">
+            <button id="pomoStartBtn" onclick="togglePomodoroTimer()" class="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 font-extrabold text-xs transition shadow">
+              شروع تمرکز
+            </button>
+            <button onclick="finishAndLogPomodoroEarly()" class="px-3 py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 border border-amber-500/30 font-bold text-xs transition" title="ثبت دقایق سپری‌شده در تسک">
+              ثبت زمان فعلی
+            </button>
+            <button onclick="resetPomodoroTimer()" class="px-3 py-2.5 rounded-xl theme-elevated font-bold text-xs transition">
+              ریست
+            </button>
+          </div>
+        </div>
+
+        <!-- جعبه ایده‌پردازی و یادداشت سریع -->
+        <div class="lg:col-span-7 theme-card rounded-2xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h2 class="text-base font-extrabold">💡 جعبه ایده‌ها و یادداشت‌های سریع</h2>
+              <p class="text-xs theme-muted">ایده‌ها، لینک‌ها و کارهای ذهنی را یادداشت کنید و هر زمان خواستید با ۱ کلیک به تسک امروز تبدیل نمایید</p>
+            </div>
+          </div>
+
+          <form onsubmit="handleAddQuickIdea(event)" class="flex flex-col sm:flex-row gap-2 mb-4">
+            <input id="quickIdeaTextInput" type="text" required placeholder="ایده، لینک یا یادداشت جدید را بنویسید..." class="flex-1 px-3.5 py-2 rounded-xl theme-elevated text-xs focus:outline-none focus:border-emerald-500" />
+            <input id="quickIdeaTagInput" type="text" placeholder="برچسب (مثلاً: پروژه، محتوا...)" class="sm:w-36 px-3 py-2 rounded-xl theme-elevated text-xs focus:outline-none focus:border-emerald-500" />
+            <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition">
+              + ذخیره ایده
+            </button>
+          </form>
+
+          <div id="quickIdeasListContainer" class="space-y-2 max-h-80 overflow-y-auto"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- تب ۵: تنظیمات، قالب‌های آماده، تم‌ها و پشتیبان‌گیری                      -->
+    <!-- ===================================================================== -->
+    <section id="tabPanel-settings" class="hidden space-y-5">
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+        <!-- شخصی‌سازی عنوان داشبورد و انتخاب قالب آماده -->
+        <div class="lg:col-span-6 theme-card rounded-2xl p-5 space-y-4">
+          <h2 class="text-base font-extrabold">✨ شخصی‌سازی نام و قالب برنامه</h2>
+
+          <div class="space-y-2">
+            <label class="text-xs font-bold block">نام میز کار / عنوان برنامه شما:</label>
+            <div class="flex gap-2">
+              <input id="settingsWorkspaceTitleInput" type="text" placeholder="مثلاً: میز کار من" class="flex-1 px-3 py-2 rounded-xl theme-elevated text-xs font-bold focus:outline-none focus:border-emerald-500" />
+              <button onclick="saveWorkspaceIdentity()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition">
+                ذخیره نام
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800/60">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-extrabold">انتخاب یا تغییر قالب آماده تسک‌ها:</span>
+              <span class="text-[11px] theme-muted">مناسب برای شروع سریع</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button onclick="applyTemplatePreset('general', false)" class="p-3 rounded-xl theme-elevated hover:border-emerald-500/50 text-right transition">
+                <div class="text-xs font-extrabold text-emerald-400">🌱 قالب عمومی و زندگی روزمره</div>
+                <div class="text-[11px] theme-muted mt-0.5">ورزش، مطالعه کتاب، برنامه‌ریزی و مهارت‌آموزی</div>
+              </button>
+              <button onclick="applyTemplatePreset('developer', false)" class="p-3 rounded-xl theme-elevated hover:border-emerald-500/50 text-right transition">
+                <div class="text-xs font-extrabold text-cyan-400">💻 قالب برنامه‌نویس و فریلنسر</div>
+                <div class="text-[11px] theme-muted mt-0.5">توسعه پروژه، کدریویو، یادگیری تکنولوژی و گیت‌هاب</div>
+              </button>
+              <button onclick="applyTemplatePreset('creator', false)" class="p-3 rounded-xl theme-elevated hover:border-emerald-500/50 text-right transition">
+                <div class="text-xs font-extrabold text-amber-400">🎬 قالب تولید محتوا و مارکتینگ</div>
+                <div class="text-[11px] theme-muted mt-0.5">تولید پست، ویدیو، سناریونویسی و بررسی ترندها</div>
+              </button>
+              <button onclick="applyTemplatePreset('student', false)" class="p-3 rounded-xl theme-elevated hover:border-emerald-500/50 text-right transition">
+                <div class="text-xs font-extrabold text-teal-400">🎓 قالب دانشجویی و مطالعه عمیق</div>
+                <div class="text-[11px] theme-muted mt-0.5">مطالعه تخصصی، حل تمرین، خلاصه‌نویسی و زبان</div>
+              </button>
+              <button onclick="applyTemplatePreset('blank', false)" class="sm:col-span-2 p-3 rounded-xl theme-elevated hover:border-rose-500/40 text-right transition">
+                <div class="text-xs font-extrabold text-rose-400">📄 بوم سفید (شروع کاملاً خالی از صفر)</div>
+                <div class="text-[11px] theme-muted mt-0.5">پاک کردن تسک‌های نمونه بانک و ساخت تمام بخش‌ها توسط خودتان</div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- انتخاب پوسته رنگی (۶ تم مدرن بدون بنفش) + پشتیبان‌گیری JSON -->
+        <div class="lg:col-span-6 space-y-4">
+
+          <!-- ۶ تم رنگی -->
+          <div class="theme-card rounded-2xl p-5">
+            <h3 class="text-base font-extrabold mb-1">🎨 پوسته‌های رنگی مدرن</h3>
+            <p class="text-xs theme-muted mb-3">تم مورد علاقه خود را انتخاب کنید (ذخیره خودکار)</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <button onclick="setAppTheme('carbon-emerald')" class="p-2.5 rounded-xl theme-elevated hover:border-emerald-500 text-right flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="text-xs font-bold">کربن و زمرد</span>
+              </button>
+              <button onclick="setAppTheme('midnight-ocean')" class="p-2.5 rounded-xl theme-elevated hover:border-sky-500 text-right flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-sky-500 shrink-0"></span>
+                <span class="text-xs font-bold">اقیانوس نیمه‌شب</span>
+              </button>
+              <button onclick="setAppTheme('espresso-amber')" class="p-2.5 rounded-xl theme-elevated hover:border-amber-500 text-right flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-amber-500 shrink-0"></span>
+                <span class="text-xs font-bold">اسپرسو و کهربا</span>
+              </button>
+              <button onclick="setAppTheme('titanium-lime')" class="p-2.5 rounded-xl theme-elevated hover:border-lime-500 text-right flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-lime-500 shrink-0"></span>
+                <span class="text-xs font-bold">تیتانیوم و لایم</span>
+              </button>
+              <button onclick="setAppTheme('minimal-light')" class="p-2.5 rounded-xl theme-elevated hover:border-emerald-600 text-right flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-slate-200 border border-emerald-600 shrink-0"></span>
+                <span class="text-xs font-bold">روشن مینیمال</span>
+              </button>
+              <button onclick="setAppTheme('sand-teal')" class="p-2.5 rounded-xl theme-elevated hover:border-teal-600 text-right flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-amber-100 border border-teal-600 shrink-0"></span>
+                <span class="text-xs font-bold">شن و فیروزه</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- پشتیبان‌گیری و بازیابی اطلاعات -->
+          <div class="theme-card rounded-2xl p-5">
+            <h3 class="text-base font-extrabold mb-1">💾 پشتیبان‌گیری و انتقال اطلاعات (Backup & Restore)</h3>
+            <p class="text-xs theme-muted mb-3">تمام اطلاعات شما به صورت خصوصی روی حافظه مرورگر/گوشی شما ذخیره می‌شود. می‌توانید فایل پشتیبان تهیه کنید:</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="exportBackupJson()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition">
+                ⬇️ دانلود فایل پشتیبان (JSON)
+              </button>
+              <label class="px-4 py-2 rounded-xl theme-elevated hover:border-emerald-500/50 text-xs font-extrabold cursor-pointer transition">
+                ⬆️ بازیابی از فایل پشتیبان
+                <input type="file" accept=".json" onchange="importBackupJson(event)" class="hidden" />
+              </label>
+              <button onclick="handleInstallAppClick()" class="px-3.5 py-2 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30 text-xs font-extrabold">
+                📲 راهنمای نصب روی گوشی
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- فوتر با امضای سازنده -->
+  <footer class="max-w-[1440px] mx-auto px-4 mt-10 mb-6 text-center">
+    <div class="theme-card rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold text-emerald-400">زمان‌نگار (ZamanNegar)</span>
+        <span class="theme-muted">— وب‌اپلیکیشن متن‌باز برنامه‌ریزی و مدیریت زمان</span>
+      </div>
+      <a href="https://aivizheh.ir" target="_blank" rel="noopener noreferrer" class="px-3 py-1 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 font-extrabold transition">
+        ساخته شده توسط امیرحسین آویژه | AiVizheh.ir
+      </a>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- نوار ناوبری پایین صفحه مخصوص موبایل (Sticky Bottom Bar)                   -->
+  <!-- ========================================================================= -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 theme-card border-t mobile-bottom-nav px-2 pt-1.5">
+    <div class="grid grid-cols-5 gap-1">
+      <button onclick="switchMainTab('workspace')" id="mobTab-workspace" class="flex flex-col items-center py-1 rounded-xl text-[10px] font-extrabold text-emerald-400 bg-emerald-500/10">
+        <span class="text-base">🗓️</span>
+        <span>میز کار</span>
+      </button>
+      <button onclick="switchMainTab('bank')" id="mobTab-bank" class="flex flex-col items-center py-1 rounded-xl text-[10px] font-bold opacity-75">
+        <span class="text-base">🗂️</span>
+        <span>بانک و هدف</span>
+      </button>
+      <button onclick="switchMainTab('analytics')" id="mobTab-analytics" class="flex flex-col items-center py-1 rounded-xl text-[10px] font-bold opacity-75">
+        <span class="text-base">📊</span>
+        <span>آمار و تقویم</span>
+      </button>
+      <button onclick="switchMainTab('focus')" id="mobTab-focus" class="flex flex-col items-center py-1 rounded-xl text-[10px] font-bold opacity-75">
+        <span class="text-base">⏱️</span>
+        <span>تمرکز و ایده</span>
+      </button>
+      <button onclick="switchMainTab('settings')" id="mobTab-settings" class="flex flex-col items-center py-1 rounded-xl text-[10px] font-bold opacity-75">
+        <span class="text-base">⚙️</span>
+        <span>تنظیمات</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========================================================================= -->
+  <!-- مودال ۱: انتخابگر ساعت ۲۴ ساعته فارسی (رفع قطعی مشکل ساعت ۹ شب / ۲۱:۰۰)   -->
+  <!-- ========================================================================= -->
+  <div id="timePickerModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="theme-card rounded-3xl max-w-md w-full p-5 shadow-2xl border border-emerald-500/30">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div>
+          <h3 class="text-base font-extrabold text-emerald-400">🕒 تنظیم ساعت شروع (۲۴ ساعته دقیق)</h3>
+          <p class="text-[11px] theme-muted">پشتیبانی کامل از ساعات شب و روز (مثلاً ۹ شب = ۲۱:۰۰)</p>
+        </div>
+        <button onclick="closeTimePickerModal()" class="w-8 h-8 rounded-xl theme-elevated font-bold text-sm">✕</button>
+      </div>
+
+      <!-- پیش‌نمایش درشت ساعت انتخابی -->
+      <div class="my-4 p-3 rounded-2xl theme-elevated text-center border border-emerald-500/25">
+        <div id="tpBigPreview" class="text-3xl font-black font-mono text-amber-400" dir="ltr">21:00</div>
+        <div id="tpPeriodTextPreview" class="text-xs font-bold text-emerald-400 mt-1">ساعت ۹ شب (۲۱:۰۰)</div>
+      </div>
+
+      <!-- سوییچ سریع صبح / عصر و شب -->
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <span class="text-xs font-bold theme-muted">بازه زمانی:</span>
+        <div class="flex gap-1.5">
+          <button type="button" id="tpPeriodBtn-am" onclick="setPickerDayPeriod('am')" class="px-3 py-1 rounded-xl text-xs font-extrabold theme-elevated">☀️ صبح / ق.ظ (۰۰ تا ۱۱)</button>
+          <button type="button" id="tpPeriodBtn-pm" onclick="setPickerDayPeriod('pm')" class="px-3 py-1 rounded-xl text-xs font-extrabold bg-amber-500 text-obsidian-950">🌙 عصر و شب (۱۲ تا ۲۳)</button>
+        </div>
+      </div>
+
+      <!-- انتخابگر ساعت (۰ تا ۲۳) و دقیقه -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <div>
+          <label class="text-[11px] theme-muted block mb-1">ساعت (شبانه روز ۰۰ تا ۲۳):</label>
+          <select id="tpHourSelect" onchange="handleTpSelectChange()" class="w-full px-3 py-2 rounded-xl theme-elevated text-sm font-extrabold text-center"></select>
+        </div>
+        <div>
+          <label class="text-[11px] theme-muted block mb-1">دقیقه:</label>
+          <select id="tpMinuteSelect" onchange="handleTpSelectChange()" class="w-full px-3 py-2 rounded-xl theme-elevated text-sm font-extrabold text-center"></select>
+        </div>
+      </div>
+
+      <!-- دکمه‌های آماده ساعات پرتکرار -->
+      <div class="mb-4">
+        <div class="text-[11px] theme-muted mb-1.5">انتخاب سریع ساعات پرتکرار:</div>
+        <div class="grid grid-cols-4 gap-1.5">
+          <button type="button" onclick="setQuickPickerTime(8,0)" class="py-1.5 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500">۰۸:۰۰ صبح</button>
+          <button type="button" onclick="setQuickPickerTime(10,0)" class="py-1.5 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500">۱۰:۰۰ صبح</button>
+          <button type="button" onclick="setQuickPickerTime(14,0)" class="py-1.5 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500">۱۴:۰۰ ظهر</button>
+          <button type="button" onclick="setQuickPickerTime(17,0)" class="py-1.5 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500">۱۷:۰۰ عصر</button>
+          <button type="button" onclick="setQuickPickerTime(19,0)" class="py-1.5 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500">۱۹:۰۰ (۷ شب)</button>
+          <button type="button" onclick="setQuickPickerTime(20,0)" class="py-1.5 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500">۲۰:۰۰ (۸ شب)</button>
+          <button type="button" onclick="setQuickPickerTime(21,0)" class="py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-extrabold">۲۱:۰۰ (۹ شب)</button>
+          <button type="button" onclick="setQuickPickerTime(22,30)" class="py-1.5 rounded-lg theme-elevated text-xs font-bold hover:border-emerald-500">۲۲:۳۰ شب</button>
+        </div>
+      </div>
+
+      <!-- تایپ مستقیم هوشمند -->
+      <div class="mb-4">
+        <input id="tpSmartTextInput" oninput="parseSmartTimeText(this.value)" type="text" placeholder="یا تایپ کنید: مثلاً «9 شب» یا «21:30»" class="w-full px-3 py-1.5 rounded-xl theme-elevated text-xs text-center focus:outline-none focus:border-emerald-500" />
+      </div>
+
+      <div class="flex items-center justify-between gap-2">
+        <button type="button" onclick="clearPickedTime()" class="px-3 py-2 rounded-xl bg-rose-500/15 text-rose-400 text-xs font-bold">حذف ساعت</button>
+        <div class="flex gap-2">
+          <button type="button" onclick="closeTimePickerModal()" class="px-4 py-2 rounded-xl theme-elevated text-xs font-bold">انصراف</button>
+          <button type="button" onclick="confirmTimePickerSelection()" class="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold shadow">✓ ثبت ساعت</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- مودال ۲: خوش‌آمدگویی و راه‌اندازی سریع (Onboarding Wizard برای گیت‌هاب)    -->
+  <!-- ========================================================================= -->
+  <div id="onboardingModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="theme-card rounded-3xl max-w-xl w-full p-5 sm:p-6 shadow-2xl border border-emerald-500/35 my-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-500 flex items-center justify-center text-obsidian-950 font-black text-lg">✓</div>
+          <div>
+            <h3 class="text-base sm:text-lg font-extrabold text-emerald-400">خوش آمدید به «زمان‌نگار»</h3>
+            <p class="text-xs theme-muted">ساخته شده توسط امیرحسین آویژه (AiVizheh.ir)</p>
+          </div>
+        </div>
+        <button onclick="closeOnboardingModal()" class="w-8 h-8 rounded-xl theme-elevated font-bold text-sm">✕</button>
+      </div>
+
+      <div class="mt-4 space-y-4">
+        <div>
+          <label class="text-xs font-extrabold block mb-1.5">۱. نام خود یا عنوان میز کارتان را وارد کنید:</label>
+          <input id="onboardTitleInput" type="text" placeholder="مثلاً: میز کار علی / برنامه‌ریزی روزانه من" class="w-full px-3.5 py-2.5 rounded-xl theme-elevated text-xs font-bold focus:outline-none focus:border-emerald-500" />
+        </div>
+
+        <div>
+          <label class="text-xs font-extrabold block mb-1.5">۲. با کدام قالب می‌خواهید شروع کنید؟ (بعداً هم قابل ویرایش است)</label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="onboardPresetCards">
+            <button type="button" onclick="selectOnboardPreset('general')" id="onbCard-general" class="p-3 rounded-2xl border-2 border-emerald-500 bg-emerald-500/10 text-right transition">
+              <div class="text-xs font-extrabold text-emerald-400">🌱 عمومی و زندگی روزمره</div>
+              <div class="text-[11px] theme-muted mt-0.5">ورزش، مطالعه کتاب، برنامه‌ریزی و مهارت‌آموزی</div>
+            </button>
+            <button type="button" onclick="selectOnboardPreset('developer')" id="onbCard-developer" class="p-3 rounded-2xl theme-elevated text-right transition">
+              <div class="text-xs font-extrabold text-cyan-400">💻 برنامه‌نویس و فریلنسر</div>
+              <div class="text-[11px] theme-muted mt-0.5">توسعه پروژه، کدریویو، یادگیری تکنولوژی و ورزش</div>
+            </button>
+            <button type="button" onclick="selectOnboardPreset('creator')" id="onbCard-creator" class="p-3 rounded-2xl theme-elevated text-right transition">
+              <div class="text-xs font-extrabold text-amber-400">🎬 تولید محتوا و مارکتینگ</div>
+              <div class="text-[11px] theme-muted mt-0.5">پست و استوری، ضبط ویدیو، سناریونویسی و ایده‌یابی</div>
+            </button>
+            <button type="button" onclick="selectOnboardPreset('student')" id="onbCard-student" class="p-3 rounded-2xl theme-elevated text-right transition">
+              <div class="text-xs font-extrabold text-teal-400">🎓 دانشجویی و مطالعه عمیق</div>
+              <div class="text-[11px] theme-muted mt-0.5">مطالعه تخصصی، حل تمرین، خلاصه‌نویسی و زبان</div>
+            </button>
+            <button type="button" onclick="selectOnboardPreset('blank')" id="onbCard-blank" class="sm:col-span-2 p-3 rounded-2xl theme-elevated text-right transition">
+              <div class="text-xs font-extrabold text-slate-200">📄 بوم سفید (شروع کاملاً خالی از صفر)</div>
+              <div class="text-[11px] theme-muted mt-0.5">بدون تسک پیش‌فرض — تمام دسته‌بندی‌ها و کارها را خودتان اضافه کنید</div>
+            </button>
+          </div>
+        </div>
+
+        <label class="flex items-center gap-2 text-xs cursor-pointer pt-1">
+          <input type="checkbox" id="onboardAutoFillToday" checked class="rounded accent-emerald-500 w-4 h-4" />
+          <span>روتین‌های روزانه قالب انتخابی را برای «امروز» هم بچین</span>
+        </label>
+      </div>
+
+      <div class="mt-5 pt-3 border-t border-slate-800 flex items-center justify-end gap-2">
+        <button onclick="closeOnboardingModal()" class="px-4 py-2 rounded-xl theme-elevated text-xs font-bold">بستن</button>
+        <button onclick="confirmOnboardingSetup()" class="px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold shadow-lg">
+          🚀 شروع استفاده از زمان‌نگار
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- مودال ۳: افزودن تسک جدید به بانک برنامه                                    -->
+  <!-- ========================================================================= -->
+  <div id="bankTaskModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="theme-card rounded-3xl max-w-md w-full p-5 shadow-2xl border border-emerald-500/30">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <h3 class="text-base font-extrabold text-emerald-400">+ افزودن تسک جدید به بانک برنامه</h3>
+        <button onclick="closeNewBankTaskModal()" class="w-8 h-8 rounded-xl theme-elevated font-bold text-sm">✕</button>
+      </div>
+
+      <form onsubmit="handleCreateBankTask(event)" class="mt-4 space-y-3">
+        <div>
+          <label class="text-xs font-bold block mb-1">عنوان تسک یا روتین:</label>
+          <input id="bankModalTitle" type="text" required placeholder="مثلاً: مطالعه روزانه کتاب / توسعه پروژه..." class="w-full px-3 py-2 rounded-xl theme-elevated text-xs focus:outline-none focus:border-emerald-500" />
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-bold block mb-1">دسته‌بندی:</label>
+            <select id="bankModalCategory" class="w-full px-2.5 py-2 rounded-xl theme-elevated text-xs"></select>
+          </div>
+          <div>
+            <label class="text-xs font-bold block mb-1">زمان هدف (دقیقه):</label>
+            <input id="bankModalTarget" type="number" min="5" max="600" value="45" class="w-full px-3 py-2 rounded-xl theme-elevated text-xs font-bold text-center" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-bold block mb-1">اولویت:</label>
+            <select id="bankModalPriority" class="w-full px-2.5 py-2 rounded-xl theme-elevated text-xs">
+              <option value="1">اولویت ۱ (بالا)</option>
+              <option value="2" selected>اولویت ۲ (متوسط)</option>
+              <option value="3">اولویت ۳ (عادی)</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs font-bold block mb-1">برچسب کوتاه (اختیاری):</label>
+            <input id="bankModalSubtag" type="text" placeholder="مثلاً: روزانه / پروژه" class="w-full px-3 py-2 rounded-xl theme-elevated text-xs" />
+          </div>
+        </div>
+        <label class="flex items-center gap-2 text-xs pt-1 cursor-pointer">
+          <input type="checkbox" id="bankModalIsRoutine" checked class="rounded accent-emerald-500" />
+          <span>جزو روتین‌های تکرارشونده هفتگی باشد</span>
+        </label>
+
+        <div class="pt-3 flex justify-end gap-2">
+          <button type="button" onclick="closeNewBankTaskModal()" class="px-4 py-2 rounded-xl theme-elevated text-xs font-bold">انصراف</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold">ذخیره در بانک</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- مودال ۴: ثبت کارکرد در تاریخ دلخواه شمسی                                  -->
+  <!-- ========================================================================= -->
+  <div id="manualLogModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="theme-card rounded-3xl max-w-md w-full p-5 shadow-2xl border border-cyan-500/30">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <h3 class="text-base font-extrabold text-cyan-400">📅 ثبت کارکرد در تاریخ دلخواه شمسی</h3>
+        <button onclick="closeManualLogModal()" class="w-8 h-8 rounded-xl theme-elevated font-bold text-sm">✕</button>
+      </div>
+      <form onsubmit="handleSaveManualDateLog(event)" class="mt-4 space-y-3">
+        <div>
+          <label class="text-xs font-bold block mb-1">تاریخ شمسی (YYYY/MM/DD):</label>
+          <input id="manualLogDateInput" type="text" dir="ltr" required placeholder="1405/08/10" class="w-full px-3 py-2 rounded-xl theme-elevated text-xs font-mono text-center" />
+        </div>
+        <div>
+          <label class="text-xs font-bold block mb-1">عنوان کار انجام‌شده:</label>
+          <input id="manualLogTitleInput" type="text" required placeholder="مثلاً: مطالعه عمیق / کدنویسی پروژه..." class="w-full px-3 py-2 rounded-xl theme-elevated text-xs" />
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-bold block mb-1">دسته‌بندی:</label>
+            <select id="manualLogCatSelect" class="w-full px-2.5 py-2 rounded-xl theme-elevated text-xs"></select>
+          </div>
+          <div>
+            <label class="text-xs font-bold block mb-1">زمان صرف‌شده (دقیقه):</label>
+            <input id="manualLogMinutesInput" type="number" min="1" max="900" value="60" required class="w-full px-3 py-2 rounded-xl theme-elevated text-xs font-bold text-center" />
+          </div>
+        </div>
+        <div class="pt-3 flex justify-end gap-2">
+          <button type="button" onclick="closeManualLogModal()" class="px-4 py-2 rounded-xl theme-elevated text-xs font-bold">انصراف</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-obsidian-950 text-xs font-extrabold">ثبت در تقویم و نمودار</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- مودال ۵: تعریف شمارنده هدف جدید                                           -->
+  <!-- ========================================================================= -->
+  <div id="counterModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="theme-card rounded-3xl max-w-md w-full p-5 shadow-2xl border border-emerald-500/30">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <h3 class="text-base font-extrabold text-emerald-400">🎯 تعریف شمارنده هدف جدید</h3>
+        <button onclick="closeAddCounterModal()" class="w-8 h-8 rounded-xl theme-elevated font-bold text-sm">✕</button>
+      </div>
+      <form onsubmit="handleCreateGoalCounter(event)" class="mt-4 space-y-3">
+        <div>
+          <label class="text-xs font-bold block mb-1">عنوان هدف (مثلاً: مطالعه کتاب، دوره آموزشی، ورزش):</label>
+          <input id="counterTitleInput" type="text" required placeholder="مثلاً: مطالعه کتاب عادت‌های اتمی" class="w-full px-3 py-2 rounded-xl theme-elevated text-xs" />
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <label class="text-[11px] font-bold block mb-1">کل هدف:</label>
+            <input id="counterTotalInput" type="number" min="1" value="300" required class="w-full px-2 py-2 rounded-xl theme-elevated text-xs font-bold text-center" />
+          </div>
+          <div>
+            <label class="text-[11px] font-bold block mb-1">گام افزایش:</label>
+            <input id="counterStepInput" type="number" min="1" value="10" required class="w-full px-2 py-2 rounded-xl theme-elevated text-xs font-bold text-center" />
+          </div>
+          <div>
+            <label class="text-[11px] font-bold block mb-1">واحد:</label>
+            <input id="counterUnitInput" type="text" value="صفحه" required class="w-full px-2 py-2 rounded-xl theme-elevated text-xs text-center" />
+          </div>
+        </div>
+        <div class="pt-3 flex justify-end gap-2">
+          <button type="button" onclick="closeAddCounterModal()" class="px-4 py-2 rounded-xl theme-elevated text-xs font-bold">انصراف</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold">ایجاد شمارنده</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- مودال ۶: راهنمای نصب اپلیکیشن روی اندروید و آیفون (PWA)                    -->
+  <!-- ========================================================================= -->
+  <div id="installGuideModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="theme-card rounded-3xl max-w-md w-full p-5 shadow-2xl border border-amber-500/35">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <h3 class="text-base font-extrabold text-amber-400">📲 نصب اپلیکیشن «زمان‌نگار»</h3>
+        <button onclick="closeInstallGuideModal()" class="w-8 h-8 rounded-xl theme-elevated font-bold text-sm">✕</button>
+      </div>
+      <div class="mt-4 space-y-3 text-xs leading-relaxed">
+        <div class="p-3 rounded-2xl theme-elevated">
+          <div class="font-extrabold text-emerald-400 mb-1">🤖 در گوشی‌های اندروید (کروم):</div>
+          <p class="theme-muted">روی منوی سه نقطه بالای مرورگر بزنید و گزینه <strong>«Install App»</strong> یا <strong>«Add to Home screen»</strong> را انتخاب کنید تا آیکون برنامه نصب شود.</p>
+        </div>
+        <div class="p-3 rounded-2xl theme-elevated">
+          <div class="font-extrabold text-cyan-400 mb-1">🍏 در آیفون و آیپد (مرورگر Safari):</div>
+          <p class="theme-muted">در نوار پایین سافاری روی دکمه <strong>Share (مربع با فلش رو به بالا)</strong> بزنید و سپس گزینه <strong>«Add to Home Screen»</strong> را انتخاب نمایید.</p>
+        </div>
+        <div class="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-[11px]">
+          ✓ این اپلیکیشن به صورت ۱۰۰٪ آفلاین کار می‌کند و تمام اطلاعات شما بدون نیاز به اینترنت روی حافظه دستگاهتان ذخیره می‌شود.
+        </div>
+      </div>
+      <div class="mt-4 flex justify-end">
+        <button onclick="closeInstallGuideModal()" class="px-5 py-2 rounded-xl bg-emerald-500 text-obsidian-950 text-xs font-extrabold">متوجه شدم</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- منطق کامل جاوااسکریپت برنامه                                               -->
+  <!-- ========================================================================= -->
+  <script>
+    // =========================================================================
+    // ۱. تبدیل اعداد فارسی و الگوریتم دقیق تقویم جلالی (شمسی)
+    // =========================================================================
+    const PERSIAN_DIGITS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    const JALALI_MONTH_NAMES = [
+      'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
+      'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+    ];
+    const WEEKDAY_NAMES_FA = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
+    const WEEKDAY_IDS = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri'];
+
+    function toPersianNum(val) {
+      if (val === null || val === undefined) return '';
+      return String(val).replace(/\d/g, d => PERSIAN_DIGITS[Number(d)]);
+    }
+
+    function toEnglishDigits(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/[۰-۹]/g, d => PERSIAN_DIGITS.indexOf(d))
+        .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+    }
+
+    function pad2(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function formatMinutesFa(mins) {
+      const m = Math.max(0, Math.round(Number(mins) || 0));
+      if (m === 0) return '۰ دقیقه';
+      const h = Math.floor(m / 60);
+      const rem = m % 60;
+      if (h > 0 && rem > 0) return `${toPersianNum(h)} ساعت و ${toPersianNum(rem)} دقیقه`;
+      if (h > 0) return `${toPersianNum(h)} ساعت`;
+      return `${toPersianNum(rem)} دقیقه`;
+    }
+
+    function div(a, b) {
+      return Math.trunc(a / b);
+    }
+
+    function mod(a, b) {
+      return a - Math.trunc(a / b) * b;
+    }
+
+    function jalCal(jy) {
+      const breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
+      const bl = breaks.length;
+      const gy = jy + 621;
+      let leapJ = -14;
+      let jp = breaks[0];
+      let jm, jump, leap, n, i;
+      for (i = 1; i < bl; i += 1) {
+        jm = breaks[i];
+        jump = jm - jp;
+        if (jy < jm) break;
+        leapJ = leapJ + div(jump, 33) * 8 + div(mod(jump, 33), 4);
+        jp = jm;
+      }
+      n = jy - jp;
+      leapJ = leapJ + div(n, 33) * 8 + div(mod(n, 33) + 3, 4);
+      if (mod(jump, 33) === 4 && jump - n === 4) leapJ += 1;
+      const leapG = div(gy, 4) - div((div(gy, 100) + 1) * 3, 4) - 150;
+      const march = 20 + leapJ - leapG;
+      if (jump - n < 6) n = n - jump + div(jump + 4, 33) * 33;
+      leap = mod(mod(n + 1, 33) - 1, 4);
+      if (leap === -1) leap = 4;
+      return { leap, gy, march };
+    }
+
+    function j2d(jy, jm, jd) {
+      const r = jalCal(jy);
+      return g2d(r.gy, 3, r.march) + (jm - 1) * 31 - div(jm, 7) * (jm - 7) + jd - 1;
+    }
+
+    function d2j(jdn) {
+      const gy = d2g(jdn).gy;
+      let jy = gy - 621;
+      const r = jalCal(jy);
+      const jdn1f = g2d(gy, 3, r.march);
+      let jd, jm, k;
+      k = jdn - jdn1f;
+      if (k >= 0) {
+        if (k <= 185) {
+          jm = 1 + div(k, 31);
+          jd = mod(k, 31) + 1;
+          return { jy, jm, jd };
+        } else {
+          k -= 186;
+        }
+      } else {
+        jy -= 1;
+        k += 179;
+        if (r.leap === 1) k += 1;
+      }
+      jm = 7 + div(k, 30);
+      jd = mod(k, 30) + 1;
+      return { jy, jm, jd };
+    }
+
+    function g2d(gy, gm, gd) {
+      let d = div((gy + div(gm - 8, 6) + 100100) * 1461, 4)
+        + div(153 * mod(gm + 9, 12) + 2, 5)
+        + gd - 34840408;
+      d = d - div(div(gy + 100100 + div(gm - 8, 6), 100) * 3, 4) + 752;
+      return d;
+    }
+
+    function d2g(jdn) {
+      let j = 4 * jdn + 139361631;
+      j = j + div(div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
+      const i = div(mod(j, 1461), 4) * 5 + 308;
+      const gd = div(mod(i, 153), 5) + 1;
+      const gm = mod(div(i, 153), 12) + 1;
+      const gy = div(j, 1461) - 100100 + div(8 - gm, 6);
+      return { gy, gm, gd };
+    }
+
+    function gregorianToJalali(gy, gm, gd) {
+      return d2j(g2d(gy, gm, gd));
+    }
+
+    function jalaliToGregorian(jy, jm, jd) {
+      return d2g(j2d(jy, jm, jd));
+    }
+
+    function getJalaliMonthLength(jy, jm) {
+      if (jm <= 6) return 31;
+      if (jm <= 11) return 30;
+      return jalCal(jy).leap === 0 ? 30 : 29;
+    }
+
+    function formatJalaliKey(jy, jm, jd) {
+      return `${jy}/${pad2(jm)}/${pad2(jd)}`;
+    }
+
+    function parseJalaliKey(key) {
+      const clean = toEnglishDigits(key || '').trim();
+      const parts = clean.split(/[\/\-]/).map(Number);
+      if (parts.length !== 3 || !parts[0] || !parts[1] || !parts[2]) {
+        const now = new Date();
+        return gregorianToJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+      }
+      const jy = parts[0];
+      const jm = Math.min(12, Math.max(1, parts[1]));
+      const maxD = getJalaliMonthLength(jy, jm);
+      const jd = Math.min(maxD, Math.max(1, parts[2]));
+      return { jy, jm, jd };
+    }
+
+    function getTodayJalaliKey() {
+      const now = new Date();
+      const j = gregorianToJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+      return formatJalaliKey(j.jy, j.jm, j.jd);
+    }
+
+    function addDaysToJalaliKey(dateKey, deltaDays) {
+      const { jy, jm, jd } = parseJalaliKey(dateKey);
+      const next = d2j(j2d(jy, jm, jd) + deltaDays);
+      return formatJalaliKey(next.jy, next.jm, next.jd);
+    }
+
+    function getPersianWeekdayIndex(dateKey) {
+      const { jy, jm, jd } = parseJalaliKey(dateKey);
+      const g = jalaliToGregorian(jy, jm, jd);
+      const jsDay = new Date(g.gy, g.gm - 1, g.gd).getDay(); // 0=Sun..6=Sat
+      return (jsDay + 1) % 7; // 0=شنبه ... 6=جمعه
+    }
+
+    function formatJalaliHumanReadable(dateKey, includeYear = true) {
+      const { jy, jm, jd } = parseJalaliKey(dateKey);
+      const wIdx = getPersianWeekdayIndex(dateKey);
+      const monthName = JALALI_MONTH_NAMES[jm - 1] || '';
+      if (includeYear) {
+        return `${WEEKDAY_NAMES_FA[wIdx]} ${toPersianNum(jd)} ${monthName} ${toPersianNum(jy)}`;
+      }
+      return `${WEEKDAY_NAMES_FA[wIdx]} ${toPersianNum(jd)} ${monthName}`;
+    }
+
+    function getWeekDaysForJalaliKey(dateKey) {
+      const wIdx = getPersianWeekdayIndex(dateKey);
+      const satKey = addDaysToJalaliKey(dateKey, -wIdx);
+      const result = [];
+      for (let i = 0; i < 7; i++) {
+        const k = addDaysToJalaliKey(satKey, i);
+        const { jy, jm, jd } = parseJalaliKey(k);
+        result.push({
+          index: i,
+          id: WEEKDAY_IDS[i],
+          dayName: WEEKDAY_NAMES_FA[i],
+          dateKey: k,
+          jy, jm, jd,
+          shortDateLabel: `${toPersianNum(jd)} ${JALALI_MONTH_NAMES[jm - 1]}`
+        });
+      }
+      return result;
+    }
+
+    // =========================================================================
+    // ۲. قالب‌های عمومی و استاندارد (بدون اطلاعات شخصی، آماده انتشار در گیت‌هاب)
+    // =========================================================================
+    const PUBLIC_TEMPLATES = {
+      general: {
+        name: 'قالب عمومی و زندگی روزمره',
+        categories: [
+          { id: 'cat_work', name: 'کار و پروژه', icon: '💼', color: '#10b981' },
+          { id: 'cat_growth', name: 'مطالعه و رشد فردی', icon: '📚', color: '#f59e0b' },
+          { id: 'cat_health', name: 'ورزش و سلامتی', icon: '💪', color: '#06b6d4' },
+          { id: 'cat_life', name: 'کارهای روزمره', icon: '🏡', color: '#3b82f6' }
+        ],
+        bankTasks: [
+          { id: 't_gen_1', title: 'بررسی اولویت‌های روز و برنامه‌ریزی', category: 'cat_work', targetMinutes: 20, priority: 1, subtag: 'روتین صبح', isDailyRoutine: true },
+          { id: 't_gen_2', title: 'بلوک تمرکز روی مهم‌ترین پروژه روز', category: 'cat_work', targetMinutes: 90, priority: 1, subtag: 'کار عمیق', isDailyRoutine: true },
+          { id: 't_gen_3', title: 'مطالعه روزانه کتاب (۲۰ صفحه)', category: 'cat_growth', targetMinutes: 30, priority: 2, subtag: 'کتاب‌خوانی', isDailyRoutine: true },
+          { id: 't_gen_4', title: 'ورزش و تمرین بدنی', category: 'cat_health', targetMinutes: 45, priority: 2, subtag: 'تناسب اندام', isDailyRoutine: false },
+          { id: 't_gen_5', title: 'یادگیری مهارت جدید یا زبان', category: 'cat_growth', targetMinutes: 40, priority: 2, subtag: 'آموزش', isDailyRoutine: true },
+          { id: 't_gen_6', title: 'مرور عملکرد امروز و آماده‌سازی فردا', category: 'cat_life', targetMinutes: 15, priority: 3, subtag: 'روتین شب', isDailyRoutine: true }
+        ],
+        counters: [
+          { id: 'cnt_gen_1', title: 'مطالعه کتاب ماهانه', current: 40, total: 300, step: 10, unit: 'صفحه' },
+          { id: 'cnt_gen_2', title: 'جلسات ورزش هفتگی', current: 3, total: 24, step: 1, unit: 'جلسه' }
+        ]
+      },
+      developer: {
+        name: 'قالب برنامه‌نویس و فریلنسر',
+        categories: [
+          { id: 'cat_code', name: 'توسعه و کدنویسی', icon: '💻', color: '#10b981' },
+          { id: 'cat_ai', name: 'هوش مصنوعی و تحقیق', icon: '🤖', color: '#06b6d4' },
+          { id: 'cat_devops', name: 'کدریویو و گیت‌هاب', icon: '🚀', color: '#f59e0b' },
+          { id: 'cat_health', name: 'ورزش و سلامت', icon: '🏋️', color: '#84cc16' }
+        ],
+        bankTasks: [
+          { id: 't_dev_1', title: 'توسعه فیچرهای اصلی پروژه (Deep Coding)', category: 'cat_code', targetMinutes: 120, priority: 1, subtag: 'پروژه اصلی', isDailyRoutine: true },
+          { id: 't_dev_2', title: 'کدریویو، رفع باگ و کامیت در گیت‌هاب', category: 'cat_devops', targetMinutes: 45, priority: 1, subtag: 'GitHub', isDailyRoutine: true },
+          { id: 't_dev_3', title: 'مطالعه مستندات فنی و ابزارهای هوش مصنوعی', category: 'cat_ai', targetMinutes: 45, priority: 2, subtag: 'R&D', isDailyRoutine: true },
+          { id: 't_dev_4', title: 'تمرین ورزشی و حرکات کششی', category: 'cat_health', targetMinutes: 45, priority: 2, subtag: 'سلامتی', isDailyRoutine: false },
+          { id: 't_dev_5', title: 'پاسخ به پیام‌های کارفرما / تیم (استندآپ)', category: 'cat_devops', targetMinutes: 25, priority: 2, subtag: 'جلسات', isDailyRoutine: true }
+        ],
+        counters: [
+          { id: 'cnt_dev_1', title: 'تکمیل ماژول‌های دوره تخصصی', current: 5, total: 30, step: 1, unit: 'بخش' },
+          { id: 'cnt_dev_2', title: 'روزهای کامیت مستمر در پروژه', current: 7, total: 90, step: 1, unit: 'روز' }
+        ]
+      },
+      creator: {
+        name: 'قالب تولید محتوا و دیجیتال مارکتینگ',
+        categories: [
+          { id: 'cat_insta', name: 'شبکه‌های اجتماعی', icon: '📱', color: '#f43f5e' },
+          { id: 'cat_video', name: 'ویدیو و یوتیوب', icon: '🎬', color: '#f59e0b' },
+          { id: 'cat_blog', name: 'سایت و سئو', icon: '✍️', color: '#10b981' },
+          { id: 'cat_idea', name: 'تحقیق و ایده‌یابی', icon: '💡', color: '#06b6d4' }
+        ],
+        bankTasks: [
+          { id: 't_cr_1', title: 'طراحی و انتشار پست/اسلاید آموزشی روزانه', category: 'cat_insta', targetMinutes: 60, priority: 1, subtag: 'محتوای روزانه', isDailyRoutine: true },
+          { id: 't_cr_2', title: 'ضبط و تدوین ویدیو کوتاه / ریلز', category: 'cat_video', targetMinutes: 75, priority: 1, subtag: 'ویدیو', isDailyRoutine: true },
+          { id: 't_cr_3', title: 'نگارش مقاله یا پست وبلاگ سایت', category: 'cat_blog', targetMinutes: 60, priority: 2, subtag: 'سئو و بلاگ', isDailyRoutine: true },
+          { id: 't_cr_4', title: 'بررسی ترندها و جمع‌آوری ایده‌های محتوایی', category: 'cat_idea', targetMinutes: 30, priority: 2, subtag: 'ایده‌پردازی', isDailyRoutine: true },
+          { id: 't_cr_5', title: 'پاسخ به کامنت‌ها و دایرکت‌های مخاطبان', category: 'cat_insta', targetMinutes: 25, priority: 3, subtag: 'تعامل', isDailyRoutine: true }
+        ],
+        counters: [
+          { id: 'cnt_cr_1', title: 'تولید محتوای ویدیویی ماهانه', current: 4, total: 20, step: 1, unit: 'ویدیو' },
+          { id: 'cnt_cr_2', title: 'مقالات منتشرشده در وب‌سایت', current: 3, total: 15, step: 1, unit: 'مقاله' }
+        ]
+      },
+      student: {
+        name: 'قالب دانشجویی و مطالعه عمیق',
+        categories: [
+          { id: 'cat_study', name: 'مطالعه دروس تخصصی', icon: '📖', color: '#10b981' },
+          { id: 'cat_practice', name: 'حل تمرین و پروژه', icon: '✏️', color: '#f59e0b' },
+          { id: 'cat_lang', name: 'زبان انگلیسی', icon: '🌍', color: '#06b6d4' },
+          { id: 'cat_health', name: 'ورزش و استراحت', icon: '🏃', color: '#84cc16' }
+        ],
+        bankTasks: [
+          { id: 't_st_1', title: 'مطالعه عمیق مبحث اصلی امروز', category: 'cat_study', targetMinutes: 90, priority: 1, subtag: 'مطالعه', isDailyRoutine: true },
+          { id: 't_st_2', title: 'حل تمرین، تست و پیاده‌سازی عملی', category: 'cat_practice', targetMinutes: 60, priority: 1, subtag: 'تمرین', isDailyRoutine: true },
+          { id: 't_st_3', title: 'مرور خلاصه‌نویسی‌ها و فلش‌کارت‌ها', category: 'cat_study', targetMinutes: 30, priority: 2, subtag: 'مرور', isDailyRoutine: true },
+          { id: 't_st_4', title: 'تمرین روزانه زبان انگلیسی (واژگان و شنیداری)', category: 'cat_lang', targetMinutes: 35, priority: 2, subtag: 'زبان', isDailyRoutine: true }
+        ],
+        counters: [
+          { id: 'cnt_st_1', title: 'فصل‌های مطالعه‌شده کتاب مرجع', current: 2, total: 12, step: 1, unit: 'فصل' },
+          { id: 'cnt_st_2', title: 'لغات جدید زبان انگلیسی', current: 50, total: 500, step: 10, unit: 'لغت' }
+        ]
+      },
+      blank: {
+        name: 'بوم سفید (شروع از صفر)',
+        categories: [
+          { id: 'cat_general', name: 'عمومی', icon: '📌', color: '#10b981' },
+          { id: 'cat_work', name: 'پروژه و کار', icon: '💼', color: '#f59e0b' },
+          { id: 'cat_personal', name: 'شخصی', icon: '🌱', color: '#06b6d4' }
+        ],
+        bankTasks: [],
+        counters: []
+      }
+    };
+
+    // =========================================================================
+    // ۳. وضعیت کلی برنامه (State) و ذخیره‌سازی پایدار در LocalStorage
+    // =========================================================================
+    const STORAGE_KEY = 'ZAMANNEGAR_PUBLIC_V1';
+    let state = null;
+    let activeMainTab = 'workspace';
+    let selectedOnboardPreset = 'general';
+    let drawerCategoryFilter = 'all';
+
+    // وضعیت تایمر زنده روی تسک‌ها
+    let activeTaskTimer = {
+      dateKey: null,
+      instanceId: null,
+      intervalId: null,
+      secondsElapsed: 0
+    };
+
+    // وضعیت تایمر پومودورو
+    let pomoState = {
+      totalSeconds: 25 * 60,
+      remainingSeconds: 25 * 60,
+      isRunning: false,
+      intervalId: null,
+      modeLabel: 'جلسه تمرکز ۲۵ دقیقه‌ای'
+    };
+
+    // وضعیت انتخابگر ساعت ۲۴ ساعته
+    let timePickerContext = {
+      mode: 'form', // 'form' | 'task'
+      inputId: null,
+      labelId: null,
+      dateKey: null,
+      instanceId: null,
+      hour: 21,
+      minute: 0
+    };
+
+    function createDefaultState() {
+      const todayKey = getTodayJalaliKey();
+      const tpl = PUBLIC_TEMPLATES.general;
+      const initialSchedule = {};
+      initialSchedule[todayKey] = tpl.bankTasks
+        .filter(b => b.isDailyRoutine)
+        .map((b, idx) => ({
+          instanceId: 'inst_init_' + idx + '_' + Date.now(),
+          bankId: b.id,
+          title: b.title,
+          category: b.category,
+          targetMinutes: b.targetMinutes,
+          duration: 0,
+          startTime: '',
+          priority: b.priority,
+          subtag: b.subtag || '',
+          completed: false
+        }));
+
+      return {
+        onboarded: false,
+        workspaceTitle: 'زمان‌نگار',
+        workspaceSubtitle: 'داشبورد برنامه‌ریزی و مدیریت زمان',
+        theme: 'carbon-emerald',
+        activeDateKey: todayKey,
+        plannerView: 'day',
+        analyticsRange: 'week',
+        customRangeStart: '',
+        customRangeEnd: '',
+        categories: JSON.parse(JSON.stringify(tpl.categories)),
+        bankTasks: JSON.parse(JSON.stringify(tpl.bankTasks)),
+        counters: JSON.parse(JSON.stringify(tpl.counters)),
+        scheduleByDate: initialSchedule,
+        ideas: [
+          { id: 'idea_1', text: 'می‌توانید ایده‌های روزانه خود را اینجا بنویسید و با یک کلیک به تسک امروز تبدیل کنید', tag: 'راهنما', createdAt: todayKey }
+        ]
+      };
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          state = createDefaultState();
+          saveState();
+          return;
+        }
+        const parsed = JSON.parse(raw);
+        state = Object.assign(createDefaultState(), parsed);
+        if (!state.activeDateKey) state.activeDateKey = getTodayJalaliKey();
+      } catch (e) {
+        state = createDefaultState();
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.error('Storage error:', e);
+      }
+    }
+
+    function getCategoryById(catId) {
+      return state.categories.find(c => c.id === catId) || {
+        id: 'default',
+        name: 'عمومی',
+        icon: '📌',
+        color: '#10b981'
+      };
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+      const el = document.createElement('div');
+      el.className = 'theme-card px-4 py-2.5 rounded-2xl shadow-xl border border-emerald-500/40 text-xs font-extrabold flex items-center justify-between gap-2 transition-all duration-300';
+      el.innerHTML = `<span class="text-emerald-400">✓</span><span class="flex-1">${msg}</span>`;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 280);
+      }, 2800);
+    }
+
+    // =========================================================================
+    // ۴. ساعت زنده دیجیتال و ناوبری تاریخ شمسی
+    // =========================================================================
+    function startLiveJalaliClock() {
+      function tick() {
+        const now = new Date();
+        const todayKey = getTodayJalaliKey();
+        const dateEl = document.getElementById('liveJalaliDateText');
+        const clockEl = document.getElementById('liveDigitalClock');
+        if (dateEl) dateEl.textContent = formatJalaliHumanReadable(todayKey, true);
+        if (clockEl) {
+          const hh = pad2(now.getHours());
+          const mm = pad2(now.getMinutes());
+          const ss = pad2(now.getSeconds());
+          clockEl.textContent = toPersianNum(`${hh}:${mm}:${ss}`);
+        }
+      }
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    function populateJalaliJumpSelectors() {
+      const daySel = document.getElementById('jumpDaySelect');
+      const monthSel = document.getElementById('jumpMonthSelect');
+      const yearSel = document.getElementById('jumpYearSelect');
+      const heatYearSel = document.getElementById('heatmapYearSelect');
+      if (!daySel || !monthSel || !yearSel) return;
+
+      const { jy, jm, jd } = parseJalaliKey(state.activeDateKey);
+      const maxDays = getJalaliMonthLength(jy, jm);
+
+      daySel.innerHTML = '';
+      for (let d = 1; d <= maxDays; d++) {
+        const opt = document.createElement('option');
+        opt.value = String(d);
+        opt.className = 'bg-slate-900 text-white';
+        opt.textContent = toPersianNum(d);
+        if (d === jd) opt.selected = true;
+        daySel.appendChild(opt);
+      }
+
+      monthSel.value = String(jm);
+
+      yearSel.innerHTML = '';
+      if (heatYearSel) heatYearSel.innerHTML = '';
+      for (let y = 1402; y <= 1410; y++) {
+        const opt = document.createElement('option');
+        opt.value = String(y);
+        opt.className = 'bg-slate-900 text-white';
+        opt.textContent = toPersianNum(y);
+        if (y === jy) opt.selected = true;
+        yearSel.appendChild(opt);
+
+        if (heatYearSel) {
+          const hOpt = opt.cloneNode(true);
+          if (y === jy) hOpt.selected = true;
+          heatYearSel.appendChild(hOpt);
+        }
+      }
+    }
+
+    function handleDirectJalaliJump() {
+      const jy = Number(document.getElementById('jumpYearSelect').value);
+      const jm = Number(document.getElementById('jumpMonthSelect').value);
+      let jd = Number(document.getElementById('jumpDaySelect').value);
+      const maxD = getJalaliMonthLength(jy, jm);
+      if (jd > maxD) jd = maxD;
+      state.activeDateKey = formatJalaliKey(jy, jm, jd);
+      saveState();
+      renderAll();
+    }
+
+    function shiftSelectedDate(deltaDays) {
+      state.activeDateKey = addDaysToJalaliKey(state.activeDateKey, deltaDays);
+      saveState();
+      renderAll();
+    }
+
+    function jumpToTodayJalali() {
+      state.activeDateKey = getTodayJalaliKey();
+      saveState();
+      renderAll();
+      showToast('به تاریخ امروز منتقل شدید');
+    }
+
+    function selectSpecificDateKey(dateKey) {
+      state.activeDateKey = dateKey;
+      saveState();
+      renderAll();
+    }
+
+    // =========================================================================
+    // ۵. مدیریت تب‌های ۵گانه دسکتاپ و موبایل
+    // =========================================================================
+    function switchMainTab(tabId) {
+      activeMainTab = tabId;
+      const tabs = ['workspace', 'bank', 'analytics', 'focus', 'settings'];
+      tabs.forEach(t => {
+        const panel = document.getElementById(`tabPanel-${t}`);
+        const dBtn = document.getElementById(`deskTab-${t}`);
+        const mBtn = document.getElementById(`mobTab-${t}`);
+        if (panel) panel.classList.toggle('hidden', t !== tabId);
+
+        if (dBtn) {
+          dBtn.className = t === tabId
+            ? 'px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center gap-1.5 bg-emerald-500 text-obsidian-950 shadow'
+            : 'px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center gap-1.5 opacity-80 hover:opacity-100';
+        }
+        if (mBtn) {
+          mBtn.className = t === tabId
+            ? 'flex flex-col items-center py-1 rounded-xl text-[10px] font-extrabold text-emerald-400 bg-emerald-500/15'
+            : 'flex flex-col items-center py-1 rounded-xl text-[10px] font-bold opacity-75';
+        }
+      });
+
+      if (tabId === 'analytics') {
+        renderGitHubHeatmap();
+        renderAnalyticsCharts();
+      } else if (tabId === 'focus') {
+        populatePomodoroTaskSelect();
+        renderQuickIdeas();
+      } else if (tabId === 'bank') {
+        renderGoalCounters();
+        renderCategoriesManager();
+        renderFullBankGrid();
+      }
+    }
+
+    function setMobileWorkspacePane(pane) {
+      const schedPane = document.getElementById('workspaceSchedulePane');
+      const drawerPane = document.getElementById('workspaceDrawerPane');
+      const btnSched = document.getElementById('mobSubTab-schedule');
+      const btnDrawer = document.getElementById('mobSubTab-drawer');
+      if (pane === 'drawer') {
+        schedPane.classList.add('hidden', 'lg:block');
+        drawerPane.classList.remove('hidden');
+        btnDrawer.className = 'flex-1 py-2 rounded-lg text-xs font-extrabold bg-emerald-500 text-obsidian-950 transition';
+        btnSched.className = 'flex-1 py-2 rounded-lg text-xs font-extrabold opacity-75 transition';
+      } else {
+        schedPane.classList.remove('hidden');
+        drawerPane.classList.add('hidden', 'lg:block');
+        btnSched.className = 'flex-1 py-2 rounded-lg text-xs font-extrabold bg-emerald-500 text-obsidian-950 transition';
+        btnDrawer.className = 'flex-1 py-2 rounded-lg text-xs font-extrabold opacity-75 transition';
+      }
+    }
+
+    // =========================================================================
+    // ۶. انتخابگر ساعت ۲۴ ساعته بدون باگ (پشتیبانی کامل از ۹ شب / ۲۱:۰۰)
+    // =========================================================================
+    function initTimePickerSelectOptions() {
+      const hSel = document.getElementById('tpHourSelect');
+      const mSel = document.getElementById('tpMinuteSelect');
+      if (!hSel || !mSel) return;
+
+      hSel.innerHTML = '';
+      for (let h = 0; h < 24; h++) {
+        const opt = document.createElement('option');
+        opt.value = String(h);
+        opt.className = 'bg-slate-900 text-white';
+        const labelPeriod = h === 0 ? 'نیمه‌شب' : h < 12 ? 'صبح' : h === 12 ? 'ظهر' : `${toPersianNum(h - 12)} عصر/شب`;
+        opt.textContent = `${toPersianNum(pad2(h))}:۰۰ (${labelPeriod})`;
+        hSel.appendChild(opt);
+      }
+
+      mSel.innerHTML = '';
+      for (let m = 0; m < 60; m += 5) {
+        const opt = document.createElement('option');
+        opt.value = String(m);
+        opt.className = 'bg-slate-900 text-white';
+        opt.textContent = `${toPersianNum(pad2(m))} دقیقه`;
+        mSel.appendChild(opt);
+      }
+    }
+
+    function openTimePickerForForm(inputId, labelId) {
+      timePickerContext.mode = 'form';
+      timePickerContext.inputId = inputId;
+      timePickerContext.labelId = labelId;
+      const curVal = document.getElementById(inputId)?.value || '21:00';
+      const [hh, mm] = curVal.split(':').map(Number);
+      timePickerContext.hour = !isNaN(hh) ? hh : 21;
+      timePickerContext.minute = !isNaN(mm) ? mm : 0;
+      document.getElementById('tpSmartTextInput').value = '';
+      updateTimePickerPreviewUI();
+      document.getElementById('timePickerModal').classList.remove('hidden');
+    }
+
+    function openTimePickerForTask(dateKey, instanceId) {
+      const list = state.scheduleByDate[dateKey] || [];
+      const task = list.find(t => t.instanceId === instanceId);
+      if (!task) return;
+      timePickerContext.mode = 'task';
+      timePickerContext.dateKey = dateKey;
+      timePickerContext.instanceId = instanceId;
+      const curVal = task.startTime || '21:00';
+      const [hh, mm] = curVal.split(':').map(Number);
+      timePickerContext.hour = !isNaN(hh) ? hh : 21;
+      timePickerContext.minute = !isNaN(mm) ? mm : 0;
+      document.getElementById('tpSmartTextInput').value = '';
+      updateTimePickerPreviewUI();
+      document.getElementById('timePickerModal').classList.remove('hidden');
+    }
+
+    function closeTimePickerModal() {
+      document.getElementById('timePickerModal').classList.add('hidden');
+    }
+
+    function updateTimePickerPreviewUI() {
+      const h = timePickerContext.hour;
+      const m = timePickerContext.minute;
+      const formatted = `${pad2(h)}:${pad2(m)}`;
+      document.getElementById('tpBigPreview').textContent = toPersianNum(formatted);
+
+      let human = '';
+      if (h === 0) human = `ساعت ۱۲ نیمه‌شب (${toPersianNum(formatted)})`;
+      else if (h < 12) human = `ساعت ${toPersianNum(h)} صبح (${toPersianNum(formatted)})`;
+      else if (h === 12) human = `ساعت ۱۲ ظهر (${toPersianNum(formatted)})`;
+      else human = `ساعت ${toPersianNum(h - 12)} عصر/شب (${toPersianNum(formatted)})`;
+      document.getElementById('tpPeriodTextPreview').textContent = human;
+
+      const hourSel = document.getElementById('tpHourSelect');
+      const minSel = document.getElementById('tpMinuteSelect');
+      if (hourSel) hourSel.value = String(h);
+      if (minSel) {
+        const roundedMin = Math.round(m / 5) * 5;
+        minSel.value = String(roundedMin >= 60 ? 55 : roundedMin);
+      }
+
+      const amBtn = document.getElementById('tpPeriodBtn-am');
+      const pmBtn = document.getElementById('tpPeriodBtn-pm');
+      if (amBtn && pmBtn) {
+        if (h >= 12) {
+          pmBtn.className = 'px-3 py-1 rounded-xl text-xs font-extrabold bg-amber-500 text-obsidian-950';
+          amBtn.className = 'px-3 py-1 rounded-xl text-xs font-extrabold theme-elevated opacity-75';
+        } else {
+          amBtn.className = 'px-3 py-1 rounded-xl text-xs font-extrabold bg-emerald-500 text-obsidian-950';
+          pmBtn.className = 'px-3 py-1 rounded-xl text-xs font-extrabold theme-elevated opacity-75';
+        }
+      }
+    }
+
+    function handleTpSelectChange() {
+      timePickerContext.hour = Number(document.getElementById('tpHourSelect').value) || 0;
+      timePickerContext.minute = Number(document.getElementById('tpMinuteSelect').value) || 0;
+      updateTimePickerPreviewUI();
+    }
+
+    function setPickerDayPeriod(period) {
+      if (period === 'pm' && timePickerContext.hour < 12) {
+        timePickerContext.hour += 12;
+      } else if (period === 'am' && timePickerContext.hour >= 12) {
+        timePickerContext.hour -= 12;
+      }
+      updateTimePickerPreviewUI();
+    }
+
+    function setQuickPickerTime(h, m) {
+      timePickerContext.hour = h;
+      timePickerContext.minute = m;
+      updateTimePickerPreviewUI();
+    }
+
+    function parseSmartTimeText(rawVal) {
+      const clean = toEnglishDigits(rawVal).trim();
+      if (!clean) return;
+      const isNight = /شب|عصر|بعد\s*از\s*ظهر|ب\.ظ|pm/i.test(clean);
+      const isMorning = /صبح|ق\.ظ|am/i.test(clean);
+      const match = clean.match(/(\d{1,2})(?::(\d{1,2}))?/);
+      if (!match) return;
+      let h = Number(match[1]);
+      let m = match[2] ? Number(match[2]) : 0;
+      if (isNight && h < 12) h += 12;
+      if (isMorning && h === 12) h = 0;
+      if (h >= 0 && h < 24 && m >= 0 && m < 60) {
+        timePickerContext.hour = h;
+        timePickerContext.minute = m;
+        updateTimePickerPreviewUI();
+      }
+    }
+
+    function confirmTimePickerSelection() {
+      const formatted = `${pad2(timePickerContext.hour)}:${pad2(timePickerContext.minute)}`;
+      if (timePickerContext.mode === 'form') {
+        const inp = document.getElementById(timePickerContext.inputId);
+        const lbl = document.getElementById(timePickerContext.labelId);
+        if (inp) inp.value = formatted;
+        if (lbl) lbl.textContent = toPersianNum(formatted);
+      } else if (timePickerContext.mode === 'task') {
+        const list = state.scheduleByDate[timePickerContext.dateKey] || [];
+        const task = list.find(t => t.instanceId === timePickerContext.instanceId);
+        if (task) {
+          task.startTime = formatted;
+          saveState();
+          renderAll();
+          showToast(`ساعت شروع روی ${toPersianNum(formatted)} تنظیم شد`);
+        }
+      }
+      closeTimePickerModal();
+    }
+
+    function clearPickedTime() {
+      if (timePickerContext.mode === 'form') {
+        const inp = document.getElementById(timePickerContext.inputId);
+        const lbl = document.getElementById(timePickerContext.labelId);
+        if (inp) inp.value = '';
+        if (lbl) lbl.textContent = 'ساعت شروع';
+      } else if (timePickerContext.mode === 'task') {
+        const list = state.scheduleByDate[timePickerContext.dateKey] || [];
+        const task = list.find(t => t.instanceId === timePickerContext.instanceId);
+        if (task) {
+          task.startTime = '';
+          saveState();
+          renderAll();
+        }
+      }
+      closeTimePickerModal();
+    }
+
+    // =========================================================================
+    // ۷. رندر تب ۱: میز کار روزانه، تب‌های ۷ روز هفته، Drag & Drop و تایمر زنده
+    // =========================================================================
+    function createScheduleInstanceFromBank(bankTask) {
+      return {
+        instanceId: 'inst_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+        bankId: bankTask.id,
+        title: bankTask.title,
+        category: bankTask.category,
+        targetMinutes: Number(bankTask.targetMinutes) || 30,
+        duration: 0,
+        startTime: '',
+        priority: Number(bankTask.priority) || 2,
+        subtag: bankTask.subtag || '',
+        completed: false
+      };
+    }
+
+    function setPlannerView(view) {
+      state.plannerView = view;
+      const dayEl = document.getElementById('dayFocusView');
+      const boardEl = document.getElementById('weeklyBoardView');
+      const btnDay = document.getElementById('viewBtn-day');
+      const btnBoard = document.getElementById('viewBtn-board');
+      if (view === 'board') {
+        dayEl.classList.add('hidden');
+        boardEl.classList.remove('hidden');
+        btnBoard.className = 'px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-emerald-500 text-obsidian-950 transition';
+        btnDay.className = 'px-2.5 py-1 rounded-lg text-[11px] font-extrabold opacity-75 transition';
+      } else {
+        dayEl.classList.remove('hidden');
+        boardEl.classList.add('hidden');
+        btnDay.className = 'px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-emerald-500 text-obsidian-950 transition';
+        btnBoard.className = 'px-2.5 py-1 rounded-lg text-[11px] font-extrabold opacity-75 transition';
+      }
+      saveState();
+      renderAll();
+    }
+
+    function renderWeekDayTabs() {
+      const container = document.getElementById('dayTabsContainer');
+      if (!container) return;
+      const weekDays = getWeekDaysForJalaliKey(state.activeDateKey);
+      const todayKey = getTodayJalaliKey();
+      const first = weekDays[0];
+      const last = weekDays[6];
+
+      const headerTitle = document.getElementById('weekRangeTitleHeader');
+      if (headerTitle) {
+        headerTitle.textContent = `هفته: ${first.shortDateLabel} تا ${last.shortDateLabel} ${toPersianNum(last.jy)}`;
+      }
+
+      container.innerHTML = weekDays.map(wd => {
+        const list = state.scheduleByDate[wd.dateKey] || [];
+        const total = list.length;
+        const done = list.filter(t => t.completed).length;
+        const spent = list.reduce((s, t) => s + (Number(t.duration) || 0), 0);
+        const isSelected = wd.dateKey === state.activeDateKey;
+        const isToday = wd.dateKey === todayKey;
+
+        const borderClass = isSelected
+          ? 'border-2 border-emerald-500 bg-emerald-500/15 shadow-md'
+          : 'theme-elevated hover:border-emerald-500/40';
+
+        return `
+          <div onclick="selectSpecificDateKey('${wd.dateKey}')"
+               ondragover="handleDayTabDragOver(event)"
+               ondragleave="handleDayTabDragLeave(event)"
+               ondrop="handleDayTabDrop(event, '${wd.dateKey}')"
+               class="cursor-pointer rounded-xl p-2 text-center transition select-none ${borderClass}">
+            <div class="flex items-center justify-center gap-1">
+              <span class="text-[11px] sm:text-xs font-extrabold ${isSelected ? 'text-emerald-400' : ''}">${wd.dayName}</span>
+              ${isToday ? '<span class="w-1.5 h-1.5 rounded-full bg-amber-400" title="امروز"></span>' : ''}
+            </div>
+            <div class="text-[10px] theme-muted mt-0.5">${wd.shortDateLabel}</div>
+            <div class="mt-1.5 flex items-center justify-center gap-1 text-[10px] font-bold">
+              <span class="px-1.5 py-0.5 rounded bg-slate-900/60 text-emerald-400">${toPersianNum(done)}/${toPersianNum(total)}</span>
+              ${spent > 0 ? `<span class="hidden sm:inline text-amber-400">${toPersianNum(spent)}د</span>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderSelectedDaySchedule() {
+      const dateKey = state.activeDateKey;
+      const list = state.scheduleByDate[dateKey] || [];
+      const total = list.length;
+      const done = list.filter(t => t.completed).length;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      const totalSpent = list.reduce((s, t) => s + (Number(t.duration) || 0), 0);
+      const totalTarget = list.reduce((s, t) => s + (Number(t.targetMinutes) || 0), 0);
+
+      document.getElementById('selectedDayMainTitle').textContent = formatJalaliHumanReadable(dateKey, true);
+      document.getElementById('activeSelectedDateBadge').textContent = formatJalaliHumanReadable(dateKey, false);
+      document.getElementById('selectedDayCountBadge').textContent = `${toPersianNum(done)} از ${toPersianNum(total)} انجام شده`;
+      document.getElementById('selectedDayTimeSummary').textContent =
+        `مجموع زمان: ${formatMinutesFa(totalSpent)} صرف‌شده از ${formatMinutesFa(totalTarget)} هدف`;
+      document.getElementById('dayCompletionPercentText').textContent = `${toPersianNum(pct)}٪`;
+      document.getElementById('dayCompletionBar').style.width = `${pct}%`;
+
+      const container = document.getElementById('dailyTasksListContainer');
+      if (!container) return;
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="py-12 px-4 text-center rounded-2xl border-2 border-dashed border-slate-700/70">
+            <div class="text-3xl mb-2">📋</div>
+            <div class="text-sm font-extrabold">هنوز تسکی برای این تاریخ چیده نشده است</div>
+            <p class="text-xs theme-muted mt-1">از فرم بالا تسک دستی اضافه کنید، یا از «بانک تسک‌های آماده» بکشید و اینجا رها کنید</p>
+            <button onclick="applyDailyRoutinesToSelectedDay()" class="mt-3 px-4 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 text-xs font-extrabold transition">
+              + افزودن خودکار روتین‌های روزانه به این تاریخ
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map((task, idx) => {
+        const cat = getCategoryById(task.category);
+        const isRunning = activeTaskTimer.dateKey === dateKey && activeTaskTimer.instanceId === task.instanceId;
+        const targetM = Number(task.targetMinutes) || 30;
+        const spentM = Number(task.duration) || 0;
+        const timePct = Math.min(100, Math.round((spentM / targetM) * 100));
+
+        return `
+          <div draggable="true"
+               ondragstart="handleScheduleTaskDragStart(event, ${idx})"
+               ondragover="handleScheduleTaskDragOver(event, ${idx})"
+               ondragleave="handleScheduleTaskDragLeave(event)"
+               ondrop="handleScheduleTaskDrop(event, ${idx})"
+               class="draggable-item theme-elevated rounded-2xl p-3 sm:p-3.5 transition ${isRunning ? 'timer-running-card' : ''} ${task.completed ? 'opacity-70' : ''}">
+
+            <div class="flex items-start justify-between gap-2.5">
+              <!-- چک‌باکس و عنوان تسک -->
+              <div class="flex items-start gap-2.5 flex-1 min-w-0">
+                <button onclick="toggleScheduleTaskDone('${dateKey}', '${task.instanceId}')"
+                        class="mt-0.5 w-6 h-6 rounded-lg border-2 flex items-center justify-center shrink-0 transition ${task.completed ? 'bg-emerald-500 border-emerald-500 text-obsidian-950 font-black' : 'border-slate-500 hover:border-emerald-400'}">
+                  ${task.completed ? '✓' : ''}
+                </button>
+
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <span class="text-xs sm:text-sm font-extrabold ${task.completed ? 'line-through theme-muted' : ''}">${task.title}</span>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md" style="background:${cat.color}22; color:${cat.color}; border:1px solid ${cat.color}44;">
+                      ${cat.icon} ${cat.name}
+                    </span>
+                    ${task.subtag ? `<span class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800/80 theme-muted">${task.subtag}</span>` : ''}
+                  </div>
+
+                  <!-- نوار پیشرفت زمان تسک -->
+                  <div class="mt-2 flex items-center gap-2">
+                    <div class="flex-1 h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                      <div class="h-full transition-all duration-300" style="width:${timePct}%; background:${cat.color};"></div>
+                    </div>
+                    <span class="text-[10px] font-bold theme-muted shrink-0">${toPersianNum(spentM)} از ${toPersianNum(targetM)} دقیقه</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- دکمه‌های تغییر ترتیب بالا/پایین و حذف -->
+              <div class="flex items-center gap-1 shrink-0">
+                <button onclick="moveScheduleTaskOrder('${dateKey}', ${idx}, -1)" class="w-6 h-6 rounded-lg bg-slate-900/60 hover:bg-slate-800 text-[11px] font-bold" title="انتقال به بالا">↑</button>
+                <button onclick="moveScheduleTaskOrder('${dateKey}', ${idx}, 1)" class="w-6 h-6 rounded-lg bg-slate-900/60 hover:bg-slate-800 text-[11px] font-bold" title="انتقال به پایین">↓</button>
+                <button onclick="removeScheduleTask('${dateKey}', '${task.instanceId}')" class="w-6 h-6 rounded-lg bg-rose-500/15 hover:bg-rose-500/30 text-rose-400 text-xs font-bold" title="حذف از این روز">✕</button>
+              </div>
+            </div>
+
+            <!-- ردیف کنترل زمان، ساعت شروع ۲۴ ساعته و تایمر زنده -->
+            <div class="mt-3 pt-2.5 border-t border-slate-800/60 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+
+              <!-- دکمه تنظیم ساعت شروع ۲۴ ساعته -->
+              <div class="flex items-center gap-1.5">
+                <button onclick="openTimePickerForTask('${dateKey}', '${task.instanceId}')"
+                        class="px-2.5 py-1 rounded-lg ${task.startTime ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-slate-900/60 theme-muted hover:text-white'} font-extrabold transition flex items-center gap-1">
+                  <span>🕒</span>
+                  <span>${task.startTime ? toPersianNum(task.startTime) : 'ساعت شروع'}</span>
+                </button>
+
+                <!-- زمان هدف -->
+                <div class="flex items-center gap-1 bg-slate-900/60 px-2 py-0.5 rounded-lg">
+                  <span class="theme-muted text-[10px]">هدف:</span>
+                  <input type="number" min="5" max="720" value="${targetM}"
+                         onchange="updateTaskTargetMinutes('${dateKey}', '${task.instanceId}', this.value)"
+                         class="w-11 bg-transparent text-center font-extrabold focus:outline-none text-emerald-400" />
+                  <span class="text-[10px] theme-muted">د</span>
+                </div>
+              </div>
+
+              <!-- تنظیم درجای زمان صرف‌شده + تایمر زنده -->
+              <div class="flex flex-wrap items-center gap-1">
+                <span class="text-[10px] theme-muted ml-1">زمان صرف‌شده:</span>
+                <button onclick="adjustTaskSpentMinutes('${dateKey}', '${task.instanceId}', -15)" class="px-1.5 py-0.5 rounded bg-slate-900/70 hover:bg-rose-500/20 text-rose-300 font-bold">-۱۵</button>
+                <button onclick="adjustTaskSpentMinutes('${dateKey}', '${task.instanceId}', -5)" class="px-1.5 py-0.5 rounded bg-slate-900/70 hover:bg-rose-500/20 text-rose-300 font-bold">-۵</button>
+                <input type="number" min="0" max="999" value="${spentM}"
+                       onchange="setTaskSpentMinutesDirect('${dateKey}', '${task.instanceId}', this.value)"
+                       class="w-12 py-0.5 rounded bg-slate-900/90 border border-slate-700 text-center font-extrabold text-amber-400 focus:outline-none" />
+                <button onclick="adjustTaskSpentMinutes('${dateKey}', '${task.instanceId}', 5)" class="px-1.5 py-0.5 rounded bg-slate-900/70 hover:bg-emerald-500/20 text-emerald-300 font-bold">+۵</button>
+                <button onclick="adjustTaskSpentMinutes('${dateKey}', '${task.instanceId}', 15)" class="px-1.5 py-0.5 rounded bg-slate-900/70 hover:bg-emerald-500/20 text-emerald-300 font-bold">+۱۵</button>
+
+                <button onclick="toggleLiveTaskTimer('${dateKey}', '${task.instanceId}')"
+                        class="mr-1 px-2.5 py-1 rounded-lg font-extrabold transition flex items-center gap-1 ${isRunning ? 'bg-amber-500 text-obsidian-950' : 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30'}">
+                  <span>${isRunning ? '⏹ توقف' : '▶ تایمر'}</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // کشوی بانک تسک‌ها در تب ۱
+    function renderWorkspaceBankDrawer() {
+      const pillsEl = document.getElementById('drawerCategoryPills');
+      const listEl = document.getElementById('drawerBankListContainer');
+      const searchVal = (document.getElementById('drawerSearchInput')?.value || '').trim().toLowerCase();
+      if (!pillsEl || !listEl) return;
+
+      pillsEl.innerHTML = [
+        `<button onclick="setDrawerCategoryFilter('all')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 ${drawerCategoryFilter === 'all' ? 'bg-emerald-500 text-obsidian-950' : 'theme-elevated'}">همه (${toPersianNum(state.bankTasks.length)})</button>`,
+        ...state.categories.map(c => {
+          const count = state.bankTasks.filter(b => b.category === c.id).length;
+          const active = drawerCategoryFilter === c.id;
+          return `<button onclick="setDrawerCategoryFilter('${c.id}')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 ${active ? 'bg-emerald-500 text-obsidian-950' : 'theme-elevated'}">${c.icon} ${c.name} (${toPersianNum(count)})</button>`;
+        })
+      ].join('');
+
+      const filtered = state.bankTasks.filter(b => {
+        if (drawerCategoryFilter !== 'all' && b.category !== drawerCategoryFilter) return false;
+        if (searchVal && !b.title.toLowerCase().includes(searchVal)) return false;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `<div class="p-6 text-center text-xs theme-muted">تسکی در این بخش یافت نشد. با دکمه «+ تسک جدید» اضافه کنید.</div>`;
+        return;
+      }
+
+      const activeDayList = state.scheduleByDate[state.activeDateKey] || [];
+
+      listEl.innerHTML = filtered.map(b => {
+        const cat = getCategoryById(b.category);
+        const alreadyInToday = activeDayList.some(t => t.bankId === b.id);
+        return `
+          <div draggable="true"
+               ondragstart="handleBankItemDragStart(event, '${b.id}')"
+               class="draggable-item theme-elevated rounded-xl p-2.5 flex items-center justify-between gap-2 hover:border-emerald-500/40">
+            <div class="min-w-0 flex-1">
+              <div class="text-xs font-extrabold truncate">${b.title}</div>
+              <div class="flex items-center gap-1.5 mt-1 text-[10px]">
+                <span style="color:${cat.color};">${cat.icon} ${cat.name}</span>
+                <span class="theme-muted">• ${toPersianNum(b.targetMinutes)} دقیقه</span>
+                ${alreadyInToday ? '<span class="text-emerald-400 font-bold">✓ در لیست روز</span>' : ''}
+              </div>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              <button onclick="addBankTaskToDate('${b.id}', '${state.activeDateKey}')"
+                      class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold transition" title="افزودن به روز انتخاب‌شده">+</button>
+              <button onclick="addBankTaskToAllWeek('${b.id}')"
+                      class="px-2 py-1 rounded-lg theme-card hover:border-emerald-500/40 text-[10px] font-bold transition" title="افزودن به کل ۷ روز هفته">۷روز</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setDrawerCategoryFilter(catId) {
+      drawerCategoryFilter = catId;
+      renderWorkspaceBankDrawer();
+    }
+
+    function addBankTaskToDate(bankId, targetDateKey) {
+      const bankTask = state.bankTasks.find(b => b.id === bankId);
+      if (!bankTask) return;
+      if (!state.scheduleByDate[targetDateKey]) state.scheduleByDate[targetDateKey] = [];
+      state.scheduleByDate[targetDateKey].push(createScheduleInstanceFromBank(bankTask));
+      saveState();
+      renderAll();
+      showToast(`«${bankTask.title}» به برنامه اضافه شد`);
+    }
+
+    function addBankTaskToAllWeek(bankId) {
+      const bankTask = state.bankTasks.find(b => b.id === bankId);
+      if (!bankTask) return;
+      const weekDays = getWeekDaysForJalaliKey(state.activeDateKey);
+      let count = 0;
+      weekDays.forEach(wd => {
+        if (!state.scheduleByDate[wd.dateKey]) state.scheduleByDate[wd.dateKey] = [];
+        if (!state.scheduleByDate[wd.dateKey].some(t => t.bankId === bankId)) {
+          state.scheduleByDate[wd.dateKey].push(createScheduleInstanceFromBank(bankTask));
+          count++;
+        }
+      });
+      saveState();
+      renderAll();
+      showToast(`در ${toPersianNum(count)} روز هفته قرار گرفت`);
+    }
+
+    function applyDailyRoutinesToSelectedDay() {
+      const routines = state.bankTasks.filter(b => b.isDailyRoutine);
+      if (routines.length === 0) {
+        showToast('ابتدا یک تسک روتین در بانک تعریف کنید یا قالب آماده انتخاب نمایید');
+        return;
+      }
+      if (!state.scheduleByDate[state.activeDateKey]) state.scheduleByDate[state.activeDateKey] = [];
+      const dayList = state.scheduleByDate[state.activeDateKey];
+      let added = 0;
+      routines.forEach(r => {
+        if (!dayList.some(t => t.bankId === r.id)) {
+          dayList.push(createScheduleInstanceFromBank(r));
+          added++;
+        }
+      });
+      saveState();
+      renderAll();
+      showToast(`${toPersianNum(added)} روتین روزانه به این تاریخ اضافه شد`);
+    }
+
+    function applyDailyRoutinesToWeek() {
+      const routines = state.bankTasks.filter(b => b.isDailyRoutine);
+      const weekDays = getWeekDaysForJalaliKey(state.activeDateKey);
+      let added = 0;
+      weekDays.forEach(wd => {
+        if (!state.scheduleByDate[wd.dateKey]) state.scheduleByDate[wd.dateKey] = [];
+        const dayList = state.scheduleByDate[wd.dateKey];
+        routines.forEach(r => {
+          if (!dayList.some(t => t.bankId === r.id)) {
+            dayList.push(createScheduleInstanceFromBank(r));
+            added++;
+          }
+        });
+      });
+      saveState();
+      renderAll();
+      showToast(added > 0 ? `${toPersianNum(added)} تسک روتین در کل هفته چیده شد` : 'روتین‌ها از قبل در تمام روزهای هفته قرار دارند');
+    }
+
+    // عملیات روی تسک‌های روزانه
+    function handleAddCustomDailyTask(e) {
+      e.preventDefault();
+      const titleInp = document.getElementById('customTaskTitleInput');
+      const catSel = document.getElementById('customTaskCategorySelect');
+      const targetInp = document.getElementById('customTaskTargetInput');
+      const timeInp = document.getElementById('customTaskTimeValue');
+      const saveBankCheck = document.getElementById('customTaskSaveToBankCheck');
+
+      const title = titleInp.value.trim();
+      if (!title) return;
+      const category = catSel.value || (state.categories[0]?.id || 'default');
+      const targetMinutes = Math.max(5, Number(targetInp.value) || 30);
+      const startTime = timeInp.value || '';
+
+      let bankId = null;
+      if (saveBankCheck.checked) {
+        bankId = 'bank_' + Date.now();
+        state.bankTasks.unshift({
+          id: bankId,
+          title,
+          category,
+          targetMinutes,
+          priority: 2,
+          subtag: 'سفارشی',
+          isDailyRoutine: false
+        });
+      }
+
+      if (!state.scheduleByDate[state.activeDateKey]) state.scheduleByDate[state.activeDateKey] = [];
+      state.scheduleByDate[state.activeDateKey].push({
+        instanceId: 'inst_' + Date.now(),
+        bankId,
+        title,
+        category,
+        targetMinutes,
+        duration: 0,
+        startTime,
+        priority: 2,
+        subtag: 'دستی',
+        completed: false
+      });
+
+      titleInp.value = '';
+      timeInp.value = '';
+      document.getElementById('customTaskTimeBtnLabel').textContent = 'ساعت شروع';
+      saveBankCheck.checked = false;
+
+      saveState();
+      renderAll();
+      showToast('تسک جدید به لیست امروز اضافه شد');
+    }
+
+    function toggleScheduleTaskDone(dateKey, instanceId) {
+      const list = state.scheduleByDate[dateKey] || [];
+      const task = list.find(t => t.instanceId === instanceId);
+      if (!task) return;
+      task.completed = !task.completed;
+      if (task.completed && (!task.duration || task.duration === 0)) {
+        task.duration = Number(task.targetMinutes) || 30;
+      }
+      saveState();
+      renderAll();
+    }
+
+    function updateTaskTargetMinutes(dateKey, instanceId, val) {
+      const list = state.scheduleByDate[dateKey] || [];
+      const task = list.find(t => t.instanceId === instanceId);
+      if (!task) return;
+      task.targetMinutes = Math.max(5, Number(val) || 30);
+      saveState();
+      renderAll();
+    }
+
+    function adjustTaskSpentMinutes(dateKey, instanceId, delta) {
+      const list = state.scheduleByDate[dateKey] || [];
+      const task = list.find(t => t.instanceId === instanceId);
+      if (!task) return;
+      task.duration = Math.max(0, (Number(task.duration) || 0) + delta);
+      saveState();
+      renderAll();
+    }
+
+    function setTaskSpentMinutesDirect(dateKey, instanceId, val) {
+      const list = state.scheduleByDate[dateKey] || [];
+      const task = list.find(t => t.instanceId === instanceId);
+      if (!task) return;
+      task.duration = Math.max(0, Number(val) || 0);
+      saveState();
+      renderAll();
+    }
+
+    function moveScheduleTaskOrder(dateKey, index, direction) {
+      const list = state.scheduleByDate[dateKey] || [];
+      const targetIdx = index + direction;
+      if (targetIdx < 0 || targetIdx >= list.length) return;
+      const temp = list[index];
+      list[index] = list[targetIdx];
+      list[targetIdx] = temp;
+      saveState();
+      renderAll();
+    }
+
+    function removeScheduleTask(dateKey, instanceId) {
+      if (activeTaskTimer.dateKey === dateKey && activeTaskTimer.instanceId === instanceId) {
+        stopLiveTaskTimer();
+      }
+      state.scheduleByDate[dateKey] = (state.scheduleByDate[dateKey] || []).filter(t => t.instanceId !== instanceId);
+      saveState();
+      renderAll();
+    }
+
+    function clearDateTasks(dateKey) {
+      if (activeTaskTimer.dateKey === dateKey) stopLiveTaskTimer();
+      state.scheduleByDate[dateKey] = [];
+      saveState();
+      renderAll();
+      showToast('لیست این روز خالی شد');
+    }
+
+    function sortDayTasks(mode) {
+      const list = state.scheduleByDate[state.activeDateKey] || [];
+      list.sort((a, b) => {
+        if (a.completed !== b.completed) return a.completed ? 1 : -1;
+        if (mode === 'time') {
+          const tA = a.startTime || '99:99';
+          const tB = b.startTime || '99:99';
+          if (tA !== tB) return tA.localeCompare(tB);
+        }
+        return (a.priority || 2) - (b.priority || 2);
+      });
+      saveState();
+      renderAll();
+      showToast('ترتیب تسک‌ها بر اساس ساعت شروع و اولویت مرتب شد');
+    }
+
+    // Drag & Drop handlers
+    let dragPayload = null;
+
+    function handleBankItemDragStart(e, bankId) {
+      dragPayload = { type: 'bank', bankId };
+      e.dataTransfer.setData('text/plain', bankId);
+    }
+
+    function handleScheduleTaskDragStart(e, index) {
+      dragPayload = { type: 'reorder', index };
+      e.currentTarget.classList.add('dragging');
+    }
+
+    function handleScheduleTaskDragOver(e, index) {
+      e.preventDefault();
+      if (dragPayload && dragPayload.type === 'reorder' && dragPayload.index !== index) {
+        e.currentTarget.classList.add('reorder-over-top');
+      }
+    }
+
+    function handleScheduleTaskDragLeave(e) {
+      e.currentTarget.classList.remove('reorder-over-top', 'reorder-over-bottom');
+    }
+
+    function handleScheduleTaskDrop(e, targetIndex) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.currentTarget.classList.remove('reorder-over-top', 'reorder-over-bottom');
+      if (!dragPayload) return;
+
+      if (dragPayload.type === 'reorder') {
+        const list = state.scheduleByDate[state.activeDateKey] || [];
+        const [moved] = list.splice(dragPayload.index, 1);
+        list.splice(targetIndex, 0, moved);
+        saveState();
+        renderAll();
+      } else if (dragPayload.type === 'bank') {
+        addBankTaskToDate(dragPayload.bankId, state.activeDateKey);
+      }
+      dragPayload = null;
+    }
+
+    function handleDayZoneDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drop-zone-active');
+    }
+
+    function handleDayZoneDragLeave(e) {
+      e.currentTarget.classList.remove('drop-zone-active');
+    }
+
+    function handleDayZoneDrop(e) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drop-zone-active');
+      if (dragPayload && dragPayload.type === 'bank') {
+        addBankTaskToDate(dragPayload.bankId, state.activeDateKey);
+      }
+      dragPayload = null;
+    }
+
+    function handleDayTabDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drop-zone-active');
+    }
+
+    function handleDayTabDragLeave(e) {
+      e.currentTarget.classList.remove('drop-zone-active');
+    }
+
+    function handleDayTabDrop(e, targetDateKey) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drop-zone-active');
+      if (dragPayload && dragPayload.type === 'bank') {
+        addBankTaskToDate(dragPayload.bankId, targetDateKey);
+      }
+      dragPayload = null;
+    }
+
+    // نمای برد ۷ ستونی کل هفته
+    function renderWeeklyBoard() {
+      const container = document.getElementById('weeklyBoardColumns');
+      if (!container || state.plannerView !== 'board') return;
+      const weekDays = getWeekDaysForJalaliKey(state.activeDateKey);
+
+      container.innerHTML = weekDays.map(wd => {
+        const list = state.scheduleByDate[wd.dateKey] || [];
+        const spent = list.reduce((s, t) => s + (Number(t.duration) || 0), 0);
+        return `
+          <div ondragover="handleDayTabDragOver(event)"
+               ondragleave="handleDayTabDragLeave(event)"
+               ondrop="handleDayTabDrop(event, '${wd.dateKey}')"
+               class="theme-card rounded-2xl p-3 flex flex-col justify-between min-h-[260px]">
+            <div>
+              <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+                <div>
+                  <div class="text-xs font-extrabold text-emerald-400">${wd.dayName}</div>
+                  <div class="text-[10px] theme-muted">${wd.shortDateLabel}</div>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-900/60">${toPersianNum(spent)}د</span>
+              </div>
+              <div class="space-y-1.5">
+                ${list.length === 0 ? `<div class="text-[11px] theme-muted text-center py-8">خالی</div>` : list.map(t => `
+                  <div onclick="toggleScheduleTaskDone('${wd.dateKey}', '${t.instanceId}')"
+                       class="p-2 rounded-xl theme-elevated text-[11px] cursor-pointer flex items-center justify-between gap-1 ${t.completed ? 'opacity-60 line-through' : ''}">
+                    <span class="truncate font-bold">${t.completed ? '✓ ' : ''}${t.title}</span>
+                    <span class="text-[10px] text-amber-400 shrink-0">${toPersianNum(t.duration || 0)}د</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <button onclick="selectSpecificDateKey('${wd.dateKey}'); setPlannerView('day');" class="mt-3 w-full py-1.5 rounded-xl theme-elevated hover:border-emerald-500/40 text-[11px] font-bold">
+              مدیریت روز
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // تایمر زنده اختصاصی هر تسک
+    function toggleLiveTaskTimer(dateKey, instanceId) {
+      if (activeTaskTimer.dateKey === dateKey && activeTaskTimer.instanceId === instanceId) {
+        stopLiveTaskTimer();
+        return;
+      }
+      if (activeTaskTimer.intervalId) stopLiveTaskTimer();
+
+      const list = state.scheduleByDate[dateKey] || [];
+      const task = list.find(t => t.instanceId === instanceId);
+      if (!task) return;
+
+      activeTaskTimer.dateKey = dateKey;
+      activeTaskTimer.instanceId = instanceId;
+      activeTaskTimer.secondsElapsed = 0;
+
+      document.getElementById('liveTimerGlobalBar').classList.remove('hidden');
+      document.getElementById('liveTimerTaskTitle').textContent = task.title;
+
+      activeTaskTimer.intervalId = setInterval(() => {
+        activeTaskTimer.secondsElapsed++;
+        const mins = Math.floor(activeTaskTimer.secondsElapsed / 60);
+        const secs = activeTaskTimer.secondsElapsed % 60;
+        document.getElementById('liveTimerElapsedDisplay').textContent =
+          toPersianNum(`${pad2(mins)}:${pad2(secs)}`);
+
+        if (activeTaskTimer.secondsElapsed > 0 && activeTaskTimer.secondsElapsed % 60 === 0) {
+          task.duration = (Number(task.duration) || 0) + 1;
+          saveState();
+          renderSelectedDaySchedule();
+        }
+      }, 1000);
+
+      renderSelectedDaySchedule();
+    }
+
+    function stopLiveTaskTimer() {
+      if (!activeTaskTimer.intervalId) return;
+      clearInterval(activeTaskTimer.intervalId);
+      const list = state.scheduleByDate[activeTaskTimer.dateKey] || [];
+      const task = list.find(t => t.instanceId === activeTaskTimer.instanceId);
+      if (task && activeTaskTimer.secondsElapsed % 60 >= 15) {
+        task.duration = (Number(task.duration) || 0) + 1;
+      }
+      activeTaskTimer = { dateKey: null, instanceId: null, intervalId: null, secondsElapsed: 0 };
+      document.getElementById('liveTimerGlobalBar').classList.add('hidden');
+      saveState();
+      renderAll();
+      showToast('زمان تایمر ذخیره شد');
+    }
+
+    // =========================================================================
+    // ۸. تب ۲: بانک تسک‌ها، دسته‌بندی‌ها و شمارنده‌های هدف
+    // =========================================================================
+    function renderGoalCounters() {
+      const grid = document.getElementById('goalCountersGrid');
+      if (!grid) return;
+      if (state.counters.length === 0) {
+        grid.innerHTML = `<div class="col-span-full p-6 text-center text-xs theme-muted rounded-2xl theme-elevated">هنوز شمارنده هدفی تعریف نشده است. با دکمه بالا اولین هدف خود را بسازید.</div>`;
+        return;
+      }
+      grid.innerHTML = state.counters.map(c => {
+        const pct = Math.min(100, Math.round((c.current / c.total) * 100));
+        return `
+          <div class="theme-elevated rounded-2xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <h4 class="text-xs sm:text-sm font-extrabold">${c.title}</h4>
+                <button onclick="deleteGoalCounter('${c.id}')" class="text-rose-400 text-xs hover:opacity-80">✕</button>
+              </div>
+              <div class="mt-2 flex items-baseline justify-between">
+                <span class="text-lg font-black text-emerald-400">${toPersianNum(c.current)} <span class="text-xs font-normal theme-muted">از ${toPersianNum(c.total)} ${c.unit}</span></span>
+                <span class="text-xs font-extrabold text-amber-400">${toPersianNum(pct)}٪</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-slate-800 mt-2 overflow-hidden">
+                <div class="h-full bg-emerald-500 transition-all duration-300" style="width:${pct}%"></div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-800/60 flex items-center justify-between gap-1.5">
+              <button onclick="stepGoalCounter('${c.id}', -1)" class="px-2.5 py-1 rounded-lg bg-slate-900/70 text-xs font-bold">-${toPersianNum(c.step)}</button>
+              <button onclick="stepGoalCounter('${c.id}', 1)" class="flex-1 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold">+ ثبت گام (${toPersianNum(c.step)} ${c.unit})</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openAddCounterModal() {
+      document.getElementById('counterModal').classList.remove('hidden');
+    }
+    function closeAddCounterModal() {
+      document.getElementById('counterModal').classList.add('hidden');
+    }
+
+    function handleCreateGoalCounter(e) {
+      e.preventDefault();
+      const title = document.getElementById('counterTitleInput').value.trim();
+      const total = Math.max(1, Number(document.getElementById('counterTotalInput').value) || 100);
+      const step = Math.max(1, Number(document.getElementById('counterStepInput').value) || 5);
+      const unit = document.getElementById('counterUnitInput').value.trim() || 'واحد';
+      if (!title) return;
+      state.counters.push({
+        id: 'cnt_' + Date.now(),
+        title,
+        current: 0,
+        total,
+        step,
+        unit
+      });
+      document.getElementById('counterTitleInput').value = '';
+      closeAddCounterModal();
+      saveState();
+      renderGoalCounters();
+      showToast('شمارنده هدف جدید اضافه شد');
+    }
+
+    function stepGoalCounter(id, dir) {
+      const c = state.counters.find(x => x.id === id);
+      if (!c) return;
+      c.current = Math.min(c.total, Math.max(0, c.current + dir * c.step));
+      saveState();
+      renderGoalCounters();
+    }
+
+    function deleteGoalCounter(id) {
+      state.counters = state.counters.filter(x => x.id !== id);
+      saveState();
+      renderGoalCounters();
+    }
+
+    function renderCategoriesManager() {
+      const listEl = document.getElementById('categoriesManagerList');
+      if (!listEl) return;
+      listEl.innerHTML = state.categories.map(c => `
+        <div class="p-2.5 rounded-xl theme-elevated flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-3.5 h-3.5 rounded-full" style="background:${c.color};"></span>
+            <span class="text-xs font-extrabold">${c.icon} ${c.name}</span>
+          </div>
+          ${state.categories.length > 1 ? `<button onclick="deleteCategory('${c.id}')" class="text-rose-400 text-xs px-2 py-0.5 rounded hover:bg-rose-500/15">حذف</button>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function handleAddCategory(e) {
+      e.preventDefault();
+      const icon = document.getElementById('newCatIconInput').value.trim() || '📌';
+      const name = document.getElementById('newCatNameInput').value.trim();
+      const color = document.getElementById('newCatColorSelect').value || '#10b981';
+      if (!name) return;
+      state.categories.push({
+        id: 'cat_' + Date.now(),
+        name,
+        icon,
+        color
+      });
+      document.getElementById('newCatNameInput').value = '';
+      saveState();
+      renderAll();
+      showToast(`دسته‌بندی «${name}» ساخته شد`);
+    }
+
+    function deleteCategory(catId) {
+      if (state.categories.length <= 1) return;
+      state.categories = state.categories.filter(c => c.id !== catId);
+      saveState();
+      renderAll();
+    }
+
+    function renderFullBankGrid() {
+      const grid = document.getElementById('fullBankTasksGrid');
+      if (!grid) return;
+      if (state.bankTasks.length === 0) {
+        grid.innerHTML = `<div class="col-span-full p-8 text-center text-xs theme-muted rounded-2xl theme-elevated">بانک تسک‌های شما خالی است. با دکمه «+ تسک جدید در بانک» کارهای تکرارشونده خود را اضافه کنید.</div>`;
+        return;
+      }
+      grid.innerHTML = state.bankTasks.map(b => {
+        const cat = getCategoryById(b.category);
+        return `
+          <div class="theme-elevated rounded-2xl p-3.5 flex flex-col justify-between gap-2">
+            <div>
+              <div class="flex items-start justify-between gap-2">
+                <span class="text-xs sm:text-sm font-extrabold">${b.title}</span>
+                <button onclick="deleteBankTask('${b.id}')" class="text-rose-400 text-xs hover:opacity-80">✕</button>
+              </div>
+              <div class="flex flex-wrap items-center gap-1.5 mt-2 text-[10px]">
+                <span class="px-2 py-0.5 rounded-md font-bold" style="background:${cat.color}22; color:${cat.color};">${cat.icon} ${cat.name}</span>
+                <span class="px-2 py-0.5 rounded-md bg-slate-900/60">⏱ ${toPersianNum(b.targetMinutes)} دقیقه</span>
+                ${b.isDailyRoutine ? '<span class="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 font-bold">روتین</span>' : ''}
+              </div>
+            </div>
+            <div class="pt-2 border-t border-slate-800/60 flex items-center justify-end gap-1.5">
+              <button onclick="addBankTaskToDate('${b.id}', '${state.activeDateKey}')" class="px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 text-xs font-extrabold">+ افزودن به روز فعال</button>
+              <button onclick="addBankTaskToAllWeek('${b.id}')" class="px-2.5 py-1 rounded-lg theme-card text-[11px] font-bold">+ کل هفته</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openNewBankTaskModal() {
+      populateCategorySelects();
+      document.getElementById('bankTaskModal').classList.remove('hidden');
+    }
+    function closeNewBankTaskModal() {
+      document.getElementById('bankTaskModal').classList.add('hidden');
+    }
+
+    function handleCreateBankTask(e) {
+      e.preventDefault();
+      const title = document.getElementById('bankModalTitle').value.trim();
+      const category = document.getElementById('bankModalCategory').value;
+      const targetMinutes = Math.max(5, Number(document.getElementById('bankModalTarget').value) || 45);
+      const priority = Number(document.getElementById('bankModalPriority').value) || 2;
+      const subtag = document.getElementById('bankModalSubtag').value.trim();
+      const isDailyRoutine = document.getElementById('bankModalIsRoutine').checked;
+      if (!title) return;
+
+      state.bankTasks.unshift({
+        id: 'bank_' + Date.now(),
+        title,
+        category,
+        targetMinutes,
+        priority,
+        subtag,
+        isDailyRoutine
+      });
+      document.getElementById('bankModalTitle').value = '';
+      closeNewBankTaskModal();
+      saveState();
+      renderAll();
+      showToast('تسک جدید به بانک برنامه اضافه شد');
+    }
+
+    function deleteBankTask(id) {
+      state.bankTasks = state.bankTasks.filter(b => b.id !== id);
+      saveState();
+      renderAll();
+    }
+
+    // =========================================================================
+    // ۹. تب ۳: نمودار فعالیت ۳۶۵ روزه گیت‌هاب شمسی + نمودارهای تحلیلی زمان
+    // =========================================================================
+    function calculateStreakInfo() {
+      const allDates = Object.keys(state.scheduleByDate).sort();
+      let activeDaysCount = 0;
+      allDates.forEach(k => {
+        const list = state.scheduleByDate[k] || [];
+        const hasActivity = list.some(t => t.completed || (Number(t.duration) || 0) > 0);
+        if (hasActivity) activeDaysCount++;
+      });
+
+      let currentStreak = 0;
+      let cursor = getTodayJalaliKey();
+      while (true) {
+        const list = state.scheduleByDate[cursor] || [];
+        const active = list.some(t => t.completed || (Number(t.duration) || 0) > 0);
+        if (active) {
+          currentStreak++;
+          cursor = addDaysToJalaliKey(cursor, -1);
+        } else {
+          break;
+        }
+      }
+
+      const badge = document.getElementById('streakHeaderBadge');
+      if (badge) badge.textContent = `🔥 ${toPersianNum(currentStreak)} روز پیوسته`;
+      return { currentStreak, activeDaysCount };
+    }
+
+    function renderGitHubHeatmap() {
+      const grid = document.getElementById('githubHeatmapGrid');
+      const yearSel = document.getElementById('heatmapYearSelect');
+      const metricSel = document.getElementById('heatmapMetricSelect');
+      const summaryEl = document.getElementById('heatmapSummaryCards');
+      if (!grid || !yearSel) return;
+
+      const selectedYear = Number(yearSel.value) || parseJalaliKey(state.activeDateKey).jy;
+      const metric = metricSel ? metricSel.value : 'minutes';
+
+      const firstDayKey = formatJalaliKey(selectedYear, 1, 1);
+      const startPad = getPersianWeekdayIndex(firstDayKey);
+
+      let cellsHtml = '';
+      for (let p = 0; p < startPad; p++) {
+        cellsHtml += `<div class="w-[13px] h-[13px] opacity-0 pointer-events-none"></div>`;
+      }
+
+      let yearTotalMinutes = 0;
+      let yearTotalDone = 0;
+      let yearActiveDays = 0;
+
+      for (let m = 1; m <= 12; m++) {
+        const mLen = getJalaliMonthLength(selectedYear, m);
+        for (let d = 1; d <= mLen; d++) {
+          const dKey = formatJalaliKey(selectedYear, m, d);
+          const list = state.scheduleByDate[dKey] || [];
+          const mins = list.reduce((s, t) => s + (Number(t.duration) || 0), 0);
+          const done = list.filter(t => t.completed).length;
+
+          yearTotalMinutes += mins;
+          yearTotalDone += done;
+          if (mins > 0 || done > 0) yearActiveDays++;
+
+          let level = 0;
+          if (metric === 'minutes') {
+            if (mins > 0 && mins < 45) level = 1;
+            else if (mins >= 45 && mins < 120) level = 2;
+            else if (mins >= 120 && mins < 240) level = 3;
+            else if (mins >= 240) level = 4;
+          } else {
+            if (done === 1) level = 1;
+            else if (done >= 2 && done <= 3) level = 2;
+            else if (done >= 4 && done <= 5) level = 3;
+            else if (done >= 6) level = 4;
+          }
+
+          const label = `${toPersianNum(d)} ${JALALI_MONTH_NAMES[m - 1]} ${toPersianNum(selectedYear)} — ${formatMinutesFa(mins)} (${toPersianNum(done)} تسک انجام‌شده)`;
+          cellsHtml += `
+            <div onclick="selectSpecificDateKey('${dKey}'); switchMainTab('workspace');"
+                 onmouseenter="document.getElementById('heatmapHoverInfo').textContent = '${label}'"
+                 title="${label}"
+                 class="heatmap-cell heat-lvl-${level} cursor-pointer"></div>
+          `;
+        }
+      }
+
+      grid.innerHTML = cellsHtml;
+
+      const { currentStreak } = calculateStreakInfo();
+      if (summaryEl) {
+        summaryEl.innerHTML = `
+          <div class="theme-elevated rounded-xl p-3">
+            <div class="text-[11px] theme-muted">روزهای فعال در سال ${toPersianNum(selectedYear)}</div>
+            <div class="text-base font-black text-emerald-400 mt-0.5">${toPersianNum(yearActiveDays)} روز</div>
+          </div>
+          <div class="theme-elevated rounded-xl p-3">
+            <div class="text-[11px] theme-muted">کل زمان ثبت‌شده در سال</div>
+            <div class="text-base font-black text-amber-400 mt-0.5">${formatMinutesFa(yearTotalMinutes)}</div>
+          </div>
+          <div class="theme-elevated rounded-xl p-3">
+            <div class="text-[11px] theme-muted">کل تسک‌های تکمیل‌شده</div>
+            <div class="text-base font-black text-cyan-400 mt-0.5">${toPersianNum(yearTotalDone)} تسک</div>
+          </div>
+          <div class="theme-elevated rounded-xl p-3">
+            <div class="text-[11px] theme-muted">زنجیره تداوم فعلی (Streak)</div>
+            <div class="text-base font-black text-emerald-400 mt-0.5">🔥 ${toPersianNum(currentStreak)} روز</div>
+          </div>
+        `;
+      }
+    }
+
+    function setAnalyticsRange(range) {
+      state.analyticsRange = range;
+      ['day', 'week', 'month', 'year', 'all'].forEach(r => {
+        const btn = document.getElementById(`rangeBtn-${r}`);
+        if (btn) {
+          btn.className = r === range
+            ? 'px-2.5 py-1.5 rounded-xl bg-emerald-500 text-obsidian-950 text-xs font-extrabold transition'
+            : 'px-2.5 py-1.5 rounded-xl theme-elevated text-xs font-bold transition';
+        }
+      });
+      saveState();
+      renderAnalyticsCharts();
+    }
+
+    function applyManualDateRangeFilter() {
+      const s = toEnglishDigits(document.getElementById('customRangeStartInput').value).trim();
+      const e = toEnglishDigits(document.getElementById('customRangeEndInput').value).trim();
+      if (!s || !e) {
+        showToast('لطفاً هر دو تاریخ شروع و پایان را وارد کنید');
+        return;
+      }
+      state.customRangeStart = s;
+      state.customRangeEnd = e;
+      state.analyticsRange = 'custom';
+      ['day', 'week', 'month', 'year', 'all'].forEach(r => {
+        const btn = document.getElementById(`rangeBtn-${r}`);
+        if (btn) btn.className = 'px-2.5 py-1.5 rounded-xl theme-elevated text-xs font-bold transition';
+      });
+      saveState();
+      renderAnalyticsCharts();
+      showToast('فیلتر بازه تاریخ دستی اعمال شد');
+    }
+
+    function getFilteredTasksForAnalytics() {
+      const activeKey = state.activeDateKey;
+      const { jy, jm } = parseJalaliKey(activeKey);
+      const range = state.analyticsRange || 'week';
+      const matchingTasks = [];
+      let label = '';
+
+      if (range === 'day') {
+        label = `روز انتخابی (${formatJalaliHumanReadable(activeKey, true)})`;
+        (state.scheduleByDate[activeKey] || []).forEach(t => matchingTasks.push(t));
+      } else if (range === 'week') {
+        const weekDays = getWeekDaysForJalaliKey(activeKey);
+        label = `هفته انتخابی (${weekDays[0].shortDateLabel} تا ${weekDays[6].shortDateLabel})`;
+        weekDays.forEach(wd => {
+          (state.scheduleByDate[wd.dateKey] || []).forEach(t => matchingTasks.push(t));
+        });
+      } else if (range === 'month') {
+        const prefix = `${jy}/${pad2(jm)}/`;
+        label = `ماه ${JALALI_MONTH_NAMES[jm - 1]} ${toPersianNum(jy)}`;
+        Object.keys(state.scheduleByDate).forEach(k => {
+          if (k.startsWith(prefix)) {
+            (state.scheduleByDate[k] || []).forEach(t => matchingTasks.push(t));
+          }
+        });
+      } else if (range === 'year') {
+        const prefix = `${jy}/`;
+        label = `کل سال ${toPersianNum(jy)}`;
+        Object.keys(state.scheduleByDate).forEach(k => {
+          if (k.startsWith(prefix)) {
+            (state.scheduleByDate[k] || []).forEach(t => matchingTasks.push(t));
+          }
+        });
+      } else if (range === 'custom' && state.customRangeStart && state.customRangeEnd) {
+        label = `بازه دستی: ${toPersianNum(state.customRangeStart)} تا ${toPersianNum(state.customRangeEnd)}`;
+        Object.keys(state.scheduleByDate).forEach(k => {
+          if (k >= state.customRangeStart && k <= state.customRangeEnd) {
+            (state.scheduleByDate[k] || []).forEach(t => matchingTasks.push(t));
+          }
+        });
+      } else {
+        label = 'کل دوران (تمام تاریخ‌های ثبت‌شده)';
+        Object.keys(state.scheduleByDate).forEach(k => {
+          (state.scheduleByDate[k] || []).forEach(t => matchingTasks.push(t));
+        });
+      }
+
+      return { matchingTasks, label };
+    }
+
+    function renderAnalyticsCharts() {
+      const { matchingTasks, label } = getFilteredTasksForAnalytics();
+      const rangeLbl = document.getElementById('analyticsActiveRangeLabel');
+      if (rangeLbl) rangeLbl.textContent = `بازه فعلی: ${label}`;
+
+      // ۱. محاسبه سهم هر دسته‌بندی برای نمودار دونات
+      const catTotals = {};
+      let grandTotal = 0;
+      matchingTasks.forEach(t => {
+        const m = Number(t.duration) || 0;
+        if (m > 0) {
+          catTotals[t.category] = (catTotals[t.category] || 0) + m;
+          grandTotal += m;
+        }
+      });
+
+      document.getElementById('donutTotalTimeCenter').textContent = formatMinutesFa(grandTotal);
+      const svg = document.getElementById('categoryDonutSvg');
+      const legend = document.getElementById('categoryDonutLegend');
+
+      if (grandTotal === 0) {
+        svg.innerHTML = `<circle cx="21" cy="21" r="15.915" fill="transparent" stroke="rgba(148,163,184,0.2)" stroke-width="5"></circle>`;
+        legend.innerHTML = `<div class="text-center text-xs theme-muted py-3">هنوز زمانی در این بازه ثبت نشده است</div>`;
+      } else {
+        let offset = 0;
+        let circlesHtml = '';
+        let legendHtml = '';
+        Object.keys(catTotals).forEach(catId => {
+          const cat = getCategoryById(catId);
+          const mins = catTotals[catId];
+          const pct = Math.round((mins / grandTotal) * 100);
+          const dash = (mins / grandTotal) * 100;
+          circlesHtml += `
+            <circle cx="21" cy="21" r="15.915" fill="transparent"
+                    stroke="${cat.color}" stroke-width="5.5"
+                    stroke-dasharray="${dash} ${100 - dash}"
+                    stroke-dashoffset="${-offset}"></circle>
+          `;
+          offset += dash;
+          legendHtml += `
+            <div class="flex items-center justify-between text-xs">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full" style="background:${cat.color};"></span>
+                <span class="font-bold">${cat.icon} ${cat.name}</span>
+              </div>
+              <span class="theme-muted font-bold">${formatMinutesFa(mins)} (${toPersianNum(pct)}٪)</span>
+            </div>
+          `;
+        });
+        svg.innerHTML = circlesHtml;
+        legend.innerHTML = legendHtml;
+      }
+
+      // ۲. نمودار میله‌ای ۷ روز هفته انتخابی
+      const barContainer = document.getElementById('weeklyBarChartContainer');
+      const weekDays = getWeekDaysForJalaliKey(state.activeDateKey);
+      let maxDayMin = 60;
+      const dayStats = weekDays.map(wd => {
+        const list = state.scheduleByDate[wd.dateKey] || [];
+        const spent = list.reduce((s, t) => s + (Number(t.duration) || 0), 0);
+        const target = list.reduce((s, t) => s + (Number(t.targetMinutes) || 0), 0);
+        if (spent > maxDayMin) maxDayMin = spent;
+        if (target > maxDayMin) maxDayMin = target;
+        return { wd, spent, target };
+      });
+
+      barContainer.innerHTML = dayStats.map(ds => {
+        const spentH = Math.round((ds.spent / maxDayMin) * 100);
+        const targetH = Math.round((ds.target / maxDayMin) * 100);
+        return `
+          <div onclick="selectSpecificDateKey('${ds.wd.dateKey}')" class="flex flex-col items-center h-full justify-end cursor-pointer group">
+            <div class="text-[10px] font-bold text-emerald-400 mb-1">${ds.spent > 0 ? toPersianNum(ds.spent) + 'د' : ''}</div>
+            <div class="w-full max-w-[28px] h-32 bg-slate-800/60 rounded-xl relative flex items-end overflow-hidden p-0.5">
+              <div class="w-full rounded-lg bg-emerald-500/20 absolute bottom-0 left-0 right-0" style="height:${targetH}%"></div>
+              <div class="w-full rounded-lg bg-gradient-to-t from-emerald-600 to-emerald-400 relative z-10 transition-all duration-300" style="height:${spentH}%"></div>
+            </div>
+            <span class="text-[10px] font-bold mt-1.5 ${ds.wd.dateKey === state.activeDateKey ? 'text-emerald-400' : 'theme-muted'}">${ds.wd.dayName}</span>
+          </div>
+        `;
+      }).join('');
+
+      // ۳. رتبه‌بندی تسک‌ها بر اساس زمان صرف‌شده
+      const taskMap = {};
+      matchingTasks.forEach(t => {
+        const m = Number(t.duration) || 0;
+        if (m > 0) {
+          if (!taskMap[t.title]) taskMap[t.title] = { title: t.title, category: t.category, minutes: 0 };
+          taskMap[t.title].minutes += m;
+        }
+      });
+      const sortedTasks = Object.values(taskMap).sort((a, b) => b.minutes - a.minutes);
+      const topListEl = document.getElementById('topTasksTimeList');
+      if (sortedTasks.length === 0) {
+        topListEl.innerHTML = `<div class="text-xs theme-muted text-center py-8">هنوز زمانی برای تسک‌ها در این بازه ثبت نشده است</div>`;
+      } else {
+        const topMax = sortedTasks[0].minutes;
+        topListEl.innerHTML = sortedTasks.slice(0, 8).map((item, i) => {
+          const cat = getCategoryById(item.category);
+          const w = Math.round((item.minutes / topMax) * 100);
+          return `
+            <div class="space-y-1">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold truncate">${toPersianNum(i + 1)}. ${item.title}</span>
+                <span class="font-extrabold text-amber-400 shrink-0">${formatMinutesFa(item.minutes)}</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                <div class="h-full rounded-full" style="width:${w}%; background:${cat.color};"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // ثبت دستی کارکرد در تاریخ دلخواه
+    function openManualLogModal() {
+      populateCategorySelects();
+      document.getElementById('manualLogDateInput').value = state.activeDateKey;
+      document.getElementById('manualLogModal').classList.remove('hidden');
+    }
+    function closeManualLogModal() {
+      document.getElementById('manualLogModal').classList.add('hidden');
+    }
+
+    function handleSaveManualDateLog(e) {
+      e.preventDefault();
+      const rawDate = document.getElementById('manualLogDateInput').value;
+      const { jy, jm, jd } = parseJalaliKey(rawDate);
+      const dateKey = formatJalaliKey(jy, jm, jd);
+      const title = document.getElementById('manualLogTitleInput').value.trim();
+      const category = document.getElementById('manualLogCatSelect').value;
+      const mins = Math.max(1, Number(document.getElementById('manualLogMinutesInput').value) || 60);
+      if (!title) return;
+
+      if (!state.scheduleByDate[dateKey]) state.scheduleByDate[dateKey] = [];
+      state.scheduleByDate[dateKey].push({
+        instanceId: 'inst_manual_' + Date.now(),
+        bankId: null,
+        title,
+        category,
+        targetMinutes: mins,
+        duration: mins,
+        startTime: '',
+        priority: 2,
+        subtag: 'ثبت دستی',
+        completed: true
+      });
+
+      document.getElementById('manualLogTitleInput').value = '';
+      closeManualLogModal();
+      state.activeDateKey = dateKey;
+      saveState();
+      renderAll();
+      showToast(`کارکرد در تاریخ ${formatJalaliHumanReadable(dateKey, true)} ثبت شد`);
+    }
+
+    // =========================================================================
+    // ۱۰. تب ۴: تایمر پومودورو و جعبه ایده‌های سریع
+    // =========================================================================
+    function populatePomodoroTaskSelect() {
+      const sel = document.getElementById('pomoLinkedTaskSelect');
+      if (!sel) return;
+      const list = state.scheduleByDate[state.activeDateKey] || [];
+      sel.innerHTML = `<option value="">-- بدون اتصال به تسک خاص --</option>` +
+        list.map(t => `<option value="${t.instanceId}">${t.title} (${toPersianNum(t.duration || 0)}د)</option>`).join('');
+    }
+
+    function updatePomodoroDisplay() {
+      const mins = Math.floor(pomoState.remainingSeconds / 60);
+      const secs = pomoState.remainingSeconds % 60;
+      const disp = document.getElementById('pomoTimeDisplay');
+      if (disp) disp.textContent = toPersianNum(`${pad2(mins)}:${pad2(secs)}`);
+      const lbl = document.getElementById('pomoModeLabel');
+      if (lbl) lbl.textContent = pomoState.modeLabel;
+    }
+
+    function setPomodoroPreset(minutes, label) {
+      if (pomoState.intervalId) clearInterval(pomoState.intervalId);
+      pomoState.isRunning = false;
+      pomoState.totalSeconds = minutes * 60;
+      pomoState.remainingSeconds = minutes * 60;
+      pomoState.modeLabel = label;
+      document.getElementById('pomoStartBtn').textContent = 'شروع تمرکز';
+      document.getElementById('pomoStatusBadge').textContent = 'آماده شروع';
+      updatePomodoroDisplay();
+    }
+
+    function togglePomodoroTimer() {
+      const btn = document.getElementById('pomoStartBtn');
+      const badge = document.getElementById('pomoStatusBadge');
+      if (pomoState.isRunning) {
+        clearInterval(pomoState.intervalId);
+        pomoState.isRunning = false;
+        btn.textContent = 'ادامه تمرکز';
+        badge.textContent = 'متوقف‌شده';
+        return;
+      }
+
+      pomoState.isRunning = true;
+      btn.textContent = 'توقف موقت';
+      badge.textContent = 'در حال تمرکز...';
+
+      pomoState.intervalId = setInterval(() => {
+        if (pomoState.remainingSeconds > 0) {
+          pomoState.remainingSeconds--;
+          updatePomodoroDisplay();
+        } else {
+          clearInterval(pomoState.intervalId);
+          pomoState.isRunning = false;
+          playFinishBeep();
+          logPomodoroMinutesToLinkedTask(Math.round(pomoState.totalSeconds / 60));
+          resetPomodoroTimer();
+        }
+      }, 1000);
+    }
+
+    function finishAndLogPomodoroEarly() {
+      const elapsedMins = Math.floor((pomoState.totalSeconds - pomoState.remainingSeconds) / 60);
+      if (elapsedMins <= 0) {
+        showToast('حداقل ۱ دقیقه از زمان تایمر باید گذشته باشد');
+        return;
+      }
+      logPomodoroMinutesToLinkedTask(elapsedMins);
+      resetPomodoroTimer();
+    }
+
+    function logPomodoroMinutesToLinkedTask(mins) {
+      const linkedId = document.getElementById('pomoLinkedTaskSelect')?.value;
+      if (linkedId) {
+        const list = state.scheduleByDate[state.activeDateKey] || [];
+        const task = list.find(t => t.instanceId === linkedId);
+        if (task) {
+          task.duration = (Number(task.duration) || 0) + mins;
+          saveState();
+          renderAll();
+          showToast(`${toPersianNum(mins)} دقیقه به تسک «${task.title}» اضافه شد`);
+          return;
+        }
+      }
+      showToast(`جلسه تمرکز (${toPersianNum(mins)} دقیقه) به پایان رسید!`);
+    }
+
+    function resetPomodoroTimer() {
+      if (pomoState.intervalId) clearInterval(pomoState.intervalId);
+      pomoState.isRunning = false;
+      pomoState.remainingSeconds = pomoState.totalSeconds;
+      document.getElementById('pomoStartBtn').textContent = 'شروع تمرکز';
+      document.getElementById('pomoStatusBadge').textContent = 'آماده شروع';
+      updatePomodoroDisplay();
+    }
+
+    function playFinishBeep() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(660, ctx.currentTime);
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.45);
+      } catch (e) {}
+    }
+
+    // جعبه ایده‌های سریع
+    function renderQuickIdeas() {
+      const container = document.getElementById('quickIdeasListContainer');
+      if (!container) return;
+      if (state.ideas.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-xs theme-muted rounded-xl theme-elevated">جعبه ایده‌های شما خالی است.</div>`;
+        return;
+      }
+      container.innerHTML = state.ideas.map(item => `
+        <div class="p-3 rounded-xl theme-elevated flex items-center justify-between gap-2">
+          <div class="min-w-0 flex-1">
+            <div class="text-xs font-bold">${item.text}</div>
+            <div class="flex items-center gap-2 mt-1 text-[10px] theme-muted">
+              ${item.tag ? `<span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-bold">#${item.tag}</span>` : ''}
+              <span>${toPersianNum(item.createdAt || '')}</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="convertIdeaToTodayTask('${item.id}')" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 text-[11px] font-extrabold">+ تبدیل به تسک امروز</button>
+            <button onclick="deleteQuickIdea('${item.id}')" class="px-2 py-1 rounded-lg bg-rose-500/15 text-rose-400 text-xs font-bold">✕</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleAddQuickIdea(e) {
+      e.preventDefault();
+      const textInp = document.getElementById('quickIdeaTextInput');
+      const tagInp = document.getElementById('quickIdeaTagInput');
+      const text = textInp.value.trim();
+      if (!text) return;
+      state.ideas.unshift({
+        id: 'idea_' + Date.now(),
+        text,
+        tag: tagInp.value.trim() || 'ایده',
+        createdAt: state.activeDateKey
+      });
+      textInp.value = '';
+      tagInp.value = '';
+      saveState();
+      renderQuickIdeas();
+      showToast('ایده جدید ذخیره شد');
+    }
+
+    function convertIdeaToTodayTask(ideaId) {
+      const idea = state.ideas.find(i => i.id === ideaId);
+      if (!idea) return;
+      if (!state.scheduleByDate[state.activeDateKey]) state.scheduleByDate[state.activeDateKey] = [];
+      state.scheduleByDate[state.activeDateKey].push({
+        instanceId: 'inst_idea_' + Date.now(),
+        bankId: null,
+        title: idea.text,
+        category: state.categories[0]?.id || 'default',
+        targetMinutes: 30,
+        duration: 0,
+        startTime: '',
+        priority: 2,
+        subtag: idea.tag || 'ایده',
+        completed: false
+      });
+      saveState();
+      renderAll();
+      showToast('به چک‌لیست امروز اضافه شد');
+    }
+
+    function deleteQuickIdea(ideaId) {
+      state.ideas = state.ideas.filter(i => i.id !== ideaId);
+      saveState();
+      renderQuickIdeas();
+    }
+
+    // =========================================================================
+    // ۱۱. تب ۵: قالب‌ها، خوش‌آمدگویی (Onboarding)، تم‌ها و پشتیبان‌گیری
+    // =========================================================================
+    function openOnboardingModal() {
+      document.getElementById('onboardTitleInput').value = state.workspaceTitle || 'زمان‌نگار';
+      selectOnboardPreset(selectedOnboardPreset || 'general');
+      document.getElementById('onboardingModal').classList.remove('hidden');
+    }
+
+    function closeOnboardingModal() {
+      state.onboarded = true;
+      saveState();
+      document.getElementById('onboardingModal').classList.add('hidden');
+    }
+
+    function selectOnboardPreset(presetKey) {
+      selectedOnboardPreset = presetKey;
+      ['general', 'developer', 'creator', 'student', 'blank'].forEach(k => {
+        const el = document.getElementById(`onbCard-${k}`);
+        if (!el) return;
+        if (k === presetKey) {
+          el.className = `${k === 'blank' ? 'sm:col-span-2 ' : ''}p-3 rounded-2xl border-2 border-emerald-500 bg-emerald-500/15 text-right transition`;
+        } else {
+          el.className = `${k === 'blank' ? 'sm:col-span-2 ' : ''}p-3 rounded-2xl theme-elevated text-right transition`;
+        }
+      });
+    }
+
+    function confirmOnboardingSetup() {
+      const titleVal = document.getElementById('onboardTitleInput').value.trim();
+      if (titleVal) state.workspaceTitle = titleVal;
+      const autoFill = document.getElementById('onboardAutoFillToday').checked;
+      applyTemplatePreset(selectedOnboardPreset, autoFill);
+      state.onboarded = true;
+      saveState();
+      closeOnboardingModal();
+      renderAll();
+    }
+
+    function applyTemplatePreset(presetKey, populateToday = true) {
+      const tpl = PUBLIC_TEMPLATES[presetKey] || PUBLIC_TEMPLATES.general;
+      state.categories = JSON.parse(JSON.stringify(tpl.categories));
+      state.bankTasks = JSON.parse(JSON.stringify(tpl.bankTasks));
+      state.counters = JSON.parse(JSON.stringify(tpl.counters));
+
+      if (populateToday) {
+        state.scheduleByDate[state.activeDateKey] = state.bankTasks
+          .filter(b => b.isDailyRoutine)
+          .map(b => createScheduleInstanceFromBank(b));
+      }
+
+      saveState();
+      renderAll();
+      showToast(`«${tpl.name}» با موفقیت بارگذاری شد`);
+    }
+
+    function saveWorkspaceIdentity() {
+      const val = document.getElementById('settingsWorkspaceTitleInput').value.trim();
+      if (!val) return;
+      state.workspaceTitle = val;
+      saveState();
+      renderAll();
+      showToast('نام میز کار ذخیره شد');
+    }
+
+    function setAppTheme(themeName) {
+      state.theme = themeName;
+      document.body.setAttribute('data-theme', themeName);
+      saveState();
+      showToast('پوسته رنگی برنامه تغییر کرد');
+    }
+
+    function exportBackupJson() {
+      const dataStr = JSON.stringify(state, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const safeDate = state.activeDateKey.replace(/\//g, '-');
+      a.href = url;
+      a.download = `ZamanNegar-Backup-${safeDate}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('فایل پشتیبان با موفقیت دانلود شد');
+    }
+
+    function importBackupJson(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported && typeof imported === 'object') {
+            state = Object.assign(createDefaultState(), imported);
+            saveState();
+            document.body.setAttribute('data-theme', state.theme || 'carbon-emerald');
+            renderAll();
+            showToast('اطلاعات فایل پشتیبان با موفقیت بازیابی شد');
+          }
+        } catch (err) {
+          showToast('فایل انتخابی معتبر نیست');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // =========================================================================
+    // ۱۲. قابلیت نصب وب‌اپلیکیشن (PWA) روی اندروید، دسکتاپ و iOS
+    // =========================================================================
+    let deferredInstallPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+    });
+
+    function handleInstallAppClick() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then(() => {
+          deferredInstallPrompt = null;
+        });
+      } else {
+        document.getElementById('installGuideModal').classList.remove('hidden');
+      }
+    }
+
+    function closeInstallGuideModal() {
+      document.getElementById('installGuideModal').classList.add('hidden');
+    }
+
+    function setupDynamicPWA() {
+      try {
+        // ساخت آیکون استاندارد ۵۱۲ پیکسلی برای iOS و اندروید
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 512;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#090d11';
+        ctx.beginPath();
+        ctx.roundRect(0, 0, 512, 512, 110);
+        ctx.fill();
+
+        const grad = ctx.createLinearGradient(0, 0, 512, 512);
+        grad.addColorStop(0, '#10b981');
+        grad.addColorStop(1, '#0d9488');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.roundRect(56, 56, 400, 400, 88);
+        ctx.fill();
+
+        ctx.strokeStyle = '#090d11';
+        ctx.lineWidth = 38;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(165, 265);
+        ctx.lineTo(230, 330);
+        ctx.lineTo(355, 195);
+        ctx.stroke();
+
+        const iconDataUrl = canvas.toDataURL('image/png');
+        document.getElementById('appleTouchIconLink').href = iconDataUrl;
+        document.getElementById('faviconLink').href = iconDataUrl;
+
+        const manifestObj = {
+          name: 'زمان‌نگار | مدیریت زمان و برنامه‌ریزی روزانه',
+          short_name: 'زمان‌نگار',
+          description: 'وب‌اپلیکیشن برنامه‌ریزی روزانه و مدیریت زمان ساخته شده توسط امیرحسین آویژه (AiVizheh.ir)',
+          start_url: './',
+          display: 'standalone',
+          dir: 'rtl',
+          lang: 'fa-IR',
+          background_color: '#090d11',
+          theme_color: '#10b981',
+          icons: [
+            { src: iconDataUrl, sizes: '192x192', type: 'image/png' },
+            { src: iconDataUrl, sizes: '512x512', type: 'image/png' }
+          ]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
+        document.getElementById('manifestLink').href = URL.createObjectURL(manifestBlob);
+      } catch (e) {}
+    }
+
+    // =========================================================================
+    // ۱۳. رندر یکپارچه کل رابط کاربری
+    // =========================================================================
+    function populateCategorySelects() {
+      const selects = ['customTaskCategorySelect', 'bankModalCategory', 'manualLogCatSelect'];
+      const html = state.categories.map(c => `<option value="${c.id}" class="bg-slate-900 text-white">${c.icon} ${c.name}</option>`).join('');
+      selects.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+      });
+    }
+
+    function renderAll() {
+      document.getElementById('appWorkspaceTitle').textContent = state.workspaceTitle || 'زمان‌نگار';
+      const setTitleInp = document.getElementById('settingsWorkspaceTitleInput');
+      if (setTitleInp) setTitleInp.value = state.workspaceTitle || 'زمان‌نگار';
+
+      populateJalaliJumpSelectors();
+      populateCategorySelects();
+      calculateStreakInfo();
+      renderWeekDayTabs();
+      renderSelectedDaySchedule();
+      renderWorkspaceBankDrawer();
+      renderWeeklyBoard();
+
+      if (activeMainTab === 'bank') {
+        renderGoalCounters();
+        renderCategoriesManager();
+        renderFullBankGrid();
+      } else if (activeMainTab === 'analytics') {
+        renderGitHubHeatmap();
+        renderAnalyticsCharts();
+      } else if (activeMainTab === 'focus') {
+        populatePomodoroTaskSelect();
+        renderQuickIdeas();
+      }
+    }
+
+    window.onload = function () {
+      loadState();
+      document.body.setAttribute('data-theme', state.theme || 'carbon-emerald');
+      initTimePickerSelectOptions();
+      startLiveJalaliClock();
+      setupDynamicPWA();
+      renderAll();
+
+      // نمایش پنجره خوش‌آمدگویی و انتخاب قالب در اولین بازدید کاربر جدید
+      if (!state.onboarded) {
+        openOnboardingModal();
+      }
+    };
+  </script>
+</body>
+</html>
